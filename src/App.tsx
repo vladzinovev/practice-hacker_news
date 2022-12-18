@@ -1,20 +1,18 @@
 
-import React, { useContext } from 'react';
+
 import './App.css';
-import { StoreContext } from './store/store';
-
-
+import Lists from './components/Lists';
 
 
 function App() {
 
-  const {posts}=useContext(StoreContext);
-
   return (
     <div className="App">
-      {posts.map(num=>
-        <p>{num}</p>
-      )}
+      <div className='section'>
+        <Lists/>
+      </div>
+      
+      
     </div>
   );
 }

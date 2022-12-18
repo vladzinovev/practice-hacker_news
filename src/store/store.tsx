@@ -1,31 +1,76 @@
 import axios from "axios";
 import { createContext, ReactNode, useEffect, useState } from "react";
-import news from "./news";
-import novelty from "./novelty";
 
-const baseURL='https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty'
+
+const newsURL='https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty';
+
 
 interface IStoreContext{
-    posts:any[]
+    posts:any[],
+    post:{
+        'by':string,
+        'descendants' : number,
+        'id':number,
+        'kids':any[] | null,
+        'score':number,
+        'time':number,
+        'title':string,
+        'type':string,
+        'url':string
+    }
 }
 
+
 export const StoreContext=createContext<IStoreContext>({
-    posts:[]
+    posts:[],
+    post:{
+        'by':'',
+        'descendants' : 0,
+        'id':1,
+        'kids':[0],
+        'score':0,
+        'time':0,
+        'title':'',
+        'type':'',
+        'url':''
+    } 
 })
 
 const StoreComponent=({children}:{children:ReactNode})=>{
     const [posts, setPosts] = useState([]);
+    const [post, setPost] = useState(
+        {
+            'by':'',
+            'descendants':0,
+            'id':1,
+            'kids':[0],
+            'score':0,
+            'time':0,
+            'title':'',
+            'type':'',
+            'url':''
+        }
+    );
 
     useEffect(() => {
-        axios.get(baseURL).then((response) => {
-        setPosts(response.data);
+        axios.get(newsURL).then((response) => {
+            setPosts(response.data);
         });
     }, []);
+
+    /* useEffect(()=>{
+        posts.map(p=>
+            axios.get(`https://hacker-news.firebaseio.com/v0/item/${p}.json?print=pretty`)
+            .then((response)=>{
+                setPost({...post,...response.data})
+            })
+        )
+    }) */
 
     if (!posts) return null;
 
   return (
-    <StoreContext.Provider value={{posts}}>
+    <StoreContext.Provider value={{posts,post}}>
         {children}
     </StoreContext.Provider>
   )
