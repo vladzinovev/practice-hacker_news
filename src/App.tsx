@@ -1,25 +1,18 @@
-import axios from 'axios';
-import React from 'react';
-import { useEffect } from 'react';
-import './App.css';
 
-const baseURL='https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty'
+import React, { useContext } from 'react';
+import './App.css';
+import { StoreContext } from './store/store';
+
+
+
 
 function App() {
 
-  const [post, setPost] = React.useState([]);
-
-      useEffect(() => {
-        axios.get(baseURL).then((response) => {
-          setPost(response.data);
-        });
-      }, []);
-
-      if (!post) return null;
+  const {posts}=useContext(StoreContext);
 
   return (
     <div className="App">
-      {post.map(num=>
+      {posts.map(num=>
         <p>{num}</p>
       )}
     </div>
