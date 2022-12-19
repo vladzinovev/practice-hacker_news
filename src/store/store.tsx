@@ -2,7 +2,7 @@ import axios from "axios";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
 
-const newsURL='https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty';
+const newsURL='https://hacker-news.firebaseio.com/v0/newstories.json';
 
 
 interface IStoreContext{
@@ -52,11 +52,11 @@ const StoreComponent=({children}:{children:ReactNode})=>{
         }
     );
 
-    useEffect(() => {
-        axios.get(newsURL).then((response) => {
-            setPosts(response.data);
-        });
-    }, []);
+    
+    axios.get(newsURL).then((response) => {
+        setPosts(response.data);
+    });
+    
 
     /* useEffect(()=>{
         posts.map(p=>
