@@ -82,7 +82,7 @@ const Lists=()=>{
     
 
     function fetchNews(){
-        mass.map(m=>{
+        posts.map(m=>{
             axios.get(`https://hacker-news.firebaseio.com/v0/item/${m}.json`)
                 .then((response)=>{
                     //console.log(response.data);
