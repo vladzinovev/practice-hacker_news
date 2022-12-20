@@ -8,11 +8,9 @@ function App() {
 
   return (
     <div className="App">
-      <div className='section'>
+      <div className='container'>
         <Lists/>
       </div>
-      
-      
     </div>
   );
 }

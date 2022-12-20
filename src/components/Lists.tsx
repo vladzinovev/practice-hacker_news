@@ -3,7 +3,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../store/store";
 import List from "./List";
-
+const newsURL='https://hacker-news.firebaseio.com/v0/newstories.json';
 export interface NewsItemType {
     by: string,
     descendants: number,
@@ -17,10 +17,10 @@ export interface NewsItemType {
 
 
 const Lists=()=>{
-    const {posts}=useContext(StoreContext);
+    //const {posts}=useContext(StoreContext);
 
     
-    const [post, setPost] = useState({});
+    const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
     
 
@@ -79,9 +79,17 @@ const Lists=()=>{
             
         }
     ) */
+    /* function fetchPosts(){
+        axios.get(newsURL).then((response) => {
+            setPosts(response.data);
+        });
+    } */
     
 
     function fetchNews(){
+        axios.get(newsURL).then((response) => {
+            setPosts(response.data);
+        });
         posts.map(m=>{
             axios.get(`https://hacker-news.firebaseio.com/v0/item/${m}.json`)
                 .then((response)=>{
@@ -99,7 +107,7 @@ const Lists=()=>{
         fetchNews();
         setLoading(false);
         console.log(arr)
-    } ,[])
+    } ,[posts])
     
 
     return(
@@ -115,7 +123,7 @@ const Lists=()=>{
                 </TableHead>
 
                 <TableBody>
-                {arr.length<=5? <p>"loading"</p>: arr.map((l,i) => (
+                {loading ? <p>loading</p>: arr.map((l,i) => (
                     <TableRow
                     key={i}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

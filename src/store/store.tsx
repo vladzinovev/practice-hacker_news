@@ -52,11 +52,11 @@ const StoreComponent=({children}:{children:ReactNode})=>{
         }
     );
 
-    
-    axios.get(newsURL).then((response) => {
-        setPosts(response.data);
-    });
-    
+    useEffect(() => {
+        axios.get(newsURL).then((response) => {
+            setPosts(response.data);
+        });
+    }, []);
 
     /* useEffect(()=>{
         posts.map(p=>
