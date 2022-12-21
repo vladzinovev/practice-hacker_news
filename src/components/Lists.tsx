@@ -3,7 +3,11 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../store/store";
 import List from "./List";
-const newsURL='https://hacker-news.firebaseio.com/v0/newstories.json';
+import './lists.css';
+import {converterDate} from '../utils/converter';
+
+const newsURL='https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty';
+
 export interface NewsItemType {
     by: string,
     descendants: number,
@@ -20,7 +24,7 @@ const Lists=()=>{
     //const {posts}=useContext(StoreContext);
 
     
-    const [posts, setPosts] = useState([]);
+    
     const [loading, setLoading] = useState(false);
     
 
@@ -31,7 +35,7 @@ const Lists=()=>{
             title:'sssds',
             id:34054830,
             score:6,
-            time:[34055503, 34055211]
+            time: 34055211
         },
         {
             by: "afsfsdgfsdunk",
@@ -39,104 +43,73 @@ const Lists=()=>{
             title:'afaffaf',
             id:2345345345,
             score:8,
-            time:[24324503, 242431]
+            time:242431
         }
 
     ]);
+    const mass=[34071000,34070977,34070976,34070971,34070943,34070905,34070893,34070870,34070869,34070859]
+    const [posts, setPosts] = useState([]);
 
-    const mass=[34031408,34054249,34054231,34054212,34054211,34054170,34054156,34054146]
-
-    /* const fetchNews=()=>{
-        mass.map(async m=>{
-            await axios.get(`https://hacker-news.firebaseio.com/v0/item/${m}.json`)
-                .then((response)=>{
-                    console.log(response.data);
-                    setArr([...arr,response.data])
-                })
-        })
-    } */
-    /* mass.map(async m=>{
-        await axios.get(`https://hacker-news.firebaseio.com/v0/item/${m}.json`)
-            .then((response)=>{
-                //console.log(response.data);
-                setArr([...arr,response.data])
-            })
-    })
-    console.log(arr) */
-
-    
-    
-    
-    
-    /* posts.map((po:number)=>{
-            axios.get(`https://hacker-news.firebaseio.com/v0/item/${po}.json`)
-            .then((response)=>{
-                console.log(response.data);
-                //setPost(p)
-                //console.log(post)
-                //setPost(pos=>(...pos, response.data))
-            })
-            
-        }
-    ) */
-    /* function fetchPosts(){
-        axios.get(newsURL).then((response) => {
+    async function fetchPosts(){
+        await axios.get(newsURL).then((response) => {
             setPosts(response.data);
         });
-    } */
-    
-
-    function fetchNews(){
-        axios.get(newsURL).then((response) => {
-            setPosts(response.data);
-        });
-        posts.map(m=>{
-            axios.get(`https://hacker-news.firebaseio.com/v0/item/${m}.json`)
-                .then((response)=>{
-                    //console.log(response.data);
-                    setArr(pos=>[...pos,response.data])
-                    
-                })
-        })
-       
     }
 
+
+    async function fetchNews(){
+        await axios.get(newsURL).then((response) => {
+            setPosts(response.data);
+        });
+        await posts.map(m=>{
+            axios.get(`https://hacker-news.firebaseio.com/v0/item/${m}.json`)
+                .then(async (response)=>{
+                    await setArr(pos=>[...pos,response.data]) 
+                })
+        })
+    }
+    
+
     useEffect(()=>{
-        console.log('Hello')
+        //fetchPosts();
         setLoading(true);
+        console.log('true')
         fetchNews();
         setLoading(false);
-        console.log(arr)
-    } ,[posts])
+        console.log('false')
+    } ,[])
     
 
     return(
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Name title</TableCell>
-                        <TableCell align="right">Username</TableCell>
-                        <TableCell align="right">Rating</TableCell>
-                        <TableCell align="right">Date</TableCell>
-                    </TableRow>
-                </TableHead>
+        <section className='lists'>
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Name title</TableCell>
+                            <TableCell align="right">Username</TableCell>
+                            <TableCell align="right">Rating</TableCell>
+                            <TableCell align="right">Date</TableCell>
+                        </TableRow>
+                    </TableHead>
 
-                <TableBody>
-                {loading ? <p>loading</p>: arr.map((l,i) => (
-                    <TableRow
-                    key={i}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                    <TableCell component="th" scope="row">{l.title}</TableCell>
-                    <TableCell align="right">{l.by}</TableCell>
-                    <TableCell align="right">{l.score}</TableCell>
-                    <TableCell align="right">{l.time}</TableCell>
-                </TableRow>
-                ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+                    <TableBody>
+                    {loading ? (<div>loading</div>) : (arr.map((l,i) => (
+                        <TableRow
+                        key={i}
+                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                        <TableCell component="th" scope="row">{l.title}</TableCell>
+                        <TableCell align="right">{l.by}</TableCell>
+                        <TableCell align="right">{l.score}</TableCell>
+                        <TableCell align="right">{converterDate(l.time)}</TableCell>
+                    </TableRow>
+                    )))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </section>
+        
     )
 }
 export default Lists;

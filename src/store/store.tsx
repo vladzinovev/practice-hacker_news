@@ -52,10 +52,14 @@ const StoreComponent=({children}:{children:ReactNode})=>{
         }
     );
 
-    useEffect(() => {
-        axios.get(newsURL).then((response) => {
+    async function fetchPosts(){
+        await axios.get(newsURL).then((response) => {
             setPosts(response.data);
         });
+    }
+
+    useEffect(() => {
+        fetchPosts()
     }, []);
 
     /* useEffect(()=>{
