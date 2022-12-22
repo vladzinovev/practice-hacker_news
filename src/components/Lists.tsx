@@ -4,7 +4,6 @@ import { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../store/store";
 import List from "./List";
 import './lists.css';
-import {converterDate} from '../utils/converter';
 import { bestURL, newsURL } from "../variables/variables";
 
 export interface INewsItemType {
@@ -51,6 +50,10 @@ const Lists=()=>{
             
         }) 
     }
+
+    const refreshPage = ()=>{
+        window.location.reload();
+    }
     
 
     useEffect( ()=>{
@@ -65,7 +68,7 @@ const Lists=()=>{
         <section className='lists'>
             <div className='navigation'>
                 
-                <Button variant="outlined">update</Button>
+                <Button variant="outlined" onClick={()=>refreshPage()}>refresh page</Button>
 
                 <div className='switch'>
                     <div>Bests Posts</div>
@@ -79,14 +82,14 @@ const Lists=()=>{
                 
             </div>
 
-            <TableContainer component={Paper}>
+            <TableContainer className="news" component={Paper}>
                 <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Name title</TableCell>
-                            <TableCell align="right">Username</TableCell>
-                            <TableCell align="right">Rating</TableCell>
-                            <TableCell align="right">Date</TableCell>
+                            <TableCell className="text">Name title</TableCell>
+                            <TableCell className="text" align="right">Username</TableCell>
+                            <TableCell className="text" align="right">Rating</TableCell>
+                            <TableCell className="text" align="right">Date</TableCell>
                         </TableRow>
                     </TableHead>
                     
@@ -108,6 +111,8 @@ const Lists=()=>{
                     </TableBody>
                 </Table>
             </TableContainer>
+
+            <Button className="footerbutton" variant="outlined" onClick={()=>{}}>more</Button>
         </section>
         
     )
