@@ -36,6 +36,12 @@ const StoreComponent=({children}:{children:ReactNode})=>{
     useEffect(() => {
         setLoading(true);
         fetchIdPost(url);
+        const timerId =setInterval(()=>{
+            fetchIdPost(url);
+        }, 60000);
+        return () => {
+            clearInterval(timerId);
+        } 
     }, [url]);
 
 
