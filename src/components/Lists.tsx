@@ -28,9 +28,11 @@ const Lists=()=>{
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
         if(!checked){
+            setLoading(true);
             setUrl(newsURL);
         }
         else{
+            setLoading(true);
             setUrl(bestURL);
         }
     };
@@ -83,18 +85,20 @@ const Lists=()=>{
                     </TableHead>
                     
                     <TableBody>
-                    
                     {loading ? <div>loading</div> : (posts.map((l,i) => (
-                        <TableRow
-                        key={i}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                        <TableCell component="th" scope="row">{l.title}</TableCell>
-                        <TableCell align="right">{l.by}</TableCell>
-                        <TableCell align="right">{l.score}</TableCell>
-                        <TableCell align="right">{converterDate(l.time)}</TableCell>
-                    </TableRow>
+                        <List 
+                            by={l.by} 
+                            descendants={l.descendants} 
+                            id={l.id} 
+                            score={l.score} 
+                            time={l.time} 
+                            type={l.type} 
+                            url={l.url} 
+                            key={i} 
+                            title={l.title}
+                        />
                     )))}
+                    
                     </TableBody>
                 </Table>
             </TableContainer>

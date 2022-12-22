@@ -1,28 +1,19 @@
 import { TableCell, TableRow } from "@mui/material";
+import { converterDate } from "../utils/converter";
+import { INewsItemType } from "./Lists";
 
-interface IStoreContext{
-        'by':string,
-        'descendants' : number,
-        'id':number,
-        'kids':any[] | null,
-        'score':number,
-        'time':number,
-        'title':string,
-        'type':string,
-        'url':string
-}
 
-const List=({title,by, score,time,id}:IStoreContext)=>{
+const List=({title,by, score,time,id}:INewsItemType,i:number)=>{
 
     return(
         <TableRow
-            key={id}
+            key={i}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
         >
             <TableCell component="th" scope="row">{title}</TableCell>
             <TableCell align="right">{by}</TableCell>
             <TableCell align="right">{score}</TableCell>
-            <TableCell align="right">{time}</TableCell>
+            <TableCell align="right">{converterDate(time)}</TableCell>
         </TableRow>
     )
 }
