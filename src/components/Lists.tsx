@@ -1,4 +1,4 @@
-import { Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Button, Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../store/store";
@@ -63,14 +63,20 @@ const Lists=()=>{
 
     return(
         <section className='lists'>
-            <div className='switch'>
-                <div>New Posts</div>
-                <Switch
-                    checked={checked}
-                    onChange={handleChange}
-                    inputProps={{ 'aria-label': 'controlled' }}
-                />
-                <div>Bests Posts</div>
+            <div className='navigation'>
+                
+                <Button variant="outlined">update</Button>
+
+                <div className='switch'>
+                    <div>Bests Posts</div>
+                    <Switch
+                        checked={checked}
+                        onChange={handleChange}
+                        inputProps={{ 'aria-label': 'controlled' }}
+                    />
+                    <div>New Posts</div>
+                </div>
+                
             </div>
 
             <TableContainer component={Paper}>

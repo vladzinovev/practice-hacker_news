@@ -1,8 +1,15 @@
-.lists{
+
+.lists .navigation{
     
-    
-}
-.lists switch{
     display: flex;
     justify-content: space-between;
+}
+.lists .switch{
+    
+    display: flex;
+    justify-content: center;
+}
+.lists .switch div{
+    
+    margin-top: 10px;
 }
