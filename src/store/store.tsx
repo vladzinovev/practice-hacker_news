@@ -1,22 +1,30 @@
 import axios from "axios";
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, SetStateAction, useEffect, useState } from "react";
+import { newsURL } from "../variables/variables";
 
 
-export const newsURL='https://hacker-news.firebaseio.com/v0/newstories.json';
+
 
 interface IStoreContext{
     idPost:any[],
+    url:string,
+    setUrl:any,
+    loading:boolean, 
+    setLoading:any,
 }
 
-
 export const StoreContext=createContext<IStoreContext>({
-    idPost:[],
-    
+    idPost: [],
+    url: '',
+    setUrl: undefined,
+    loading: false,
+    setLoading: undefined
 })
 
 const StoreComponent=({children}:{children:ReactNode})=>{
     const [idPost, setIdPost] = useState<any[]>([]);
-    const [url,setUrl]=useState(newsURL);
+    const [url,setUrl]=useState<string>(newsURL);
+    const [loading, setLoading] = useState(false);
     
 
     async function fetchIdPost(url: string){
@@ -26,13 +34,16 @@ const StoreComponent=({children}:{children:ReactNode})=>{
     }
 
     useEffect(() => {
-        fetchIdPost(url)
-    }, []);
+        setLoading(true);
+        fetchIdPost(url);
+    }, [url]);
+
+
 
     if (!idPost) return null;
 
   return (
-    <StoreContext.Provider value={{idPost}}>
+    <StoreContext.Provider value={{idPost,url,setUrl,loading,setLoading}}>
         {children}
     </StoreContext.Provider>
   )

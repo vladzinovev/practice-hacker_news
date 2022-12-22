@@ -1,4 +1,9 @@
-.lists {
-  margin: 100px;
+.lists .switch {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 /*# sourceMappingURL=lists.css.map */
