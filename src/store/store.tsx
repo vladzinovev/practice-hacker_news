@@ -2,79 +2,37 @@ import axios from "axios";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
 
-const newsURL='https://hacker-news.firebaseio.com/v0/newstories.json';
-
+export const newsURL='https://hacker-news.firebaseio.com/v0/newstories.json';
 
 interface IStoreContext{
-    posts:any[],
-    post:{
-        'by':string,
-        'descendants' : number,
-        'id':number,
-        'kids':any[] | null,
-        'score':number,
-        'time':number,
-        'title':string,
-        'type':string,
-        'url':string
-    }
+    idPost:any[],
 }
 
 
 export const StoreContext=createContext<IStoreContext>({
-    posts:[],
-    post:{
-        'by':'',
-        'descendants' : 0,
-        'id':1,
-        'kids':[0],
-        'score':0,
-        'time':0,
-        'title':'',
-        'type':'',
-        'url':''
-    } 
+    idPost:[],
+    
 })
 
 const StoreComponent=({children}:{children:ReactNode})=>{
-    const [posts, setPosts] = useState([]);
-    const [post, setPost] = useState(
-        {
-            'by':'',
-            'descendants':0,
-            'id':1,
-            'kids':[0],
-            'score':0,
-            'time':0,
-            'title':'',
-            'type':'',
-            'url':''
-        }
-    );
+    const [idPost, setIdPost] = useState<any[]>([]);
+    const [url,setUrl]=useState(newsURL);
+    
 
-    async function fetchPosts(){
-        await axios.get(newsURL).then((response) => {
-            setPosts(response.data);
+    async function fetchIdPost(url: string){
+        await axios.get(url).then((response) => {
+            setIdPost(response.data);
         });
     }
 
     useEffect(() => {
-        fetchPosts()
+        fetchIdPost(url)
     }, []);
 
-    /* useEffect(()=>{
-        posts.map(p=>
-            axios.get(`https://hacker-news.firebaseio.com/v0/item/${p}.json?print=pretty`)
-            .then((response)=>{
-                setPost({...post,...response.data})
-            })
-        )
-    }) */
-
-    if (!posts) return null;
+    if (!idPost) return null;
 
   return (
-    <StoreContext.Provider value={{posts,post}}>
+    <StoreContext.Provider value={{idPost}}>
         {children}
     </StoreContext.Provider>
   )

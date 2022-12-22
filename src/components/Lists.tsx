@@ -14,21 +14,21 @@ export interface NewsItemType {
     id: number,
     score: number,
     time: number,
-    title: string,
+    title?: string,
     type: string,
     url: string
 }
 
 
 const Lists=()=>{
-    //const {posts}=useContext(StoreContext);
-
+    const {idPost}=useContext(StoreContext);
+    const [posts, setPosts]=useState([])
     
     
     const [loading, setLoading] = useState(false);
     
 
-    const [arr, setArr] = useState([
+    const [arr, setArr] = useState<any[]>([
         {
             by: "cf100clunk",
             descendants:2,
@@ -47,41 +47,88 @@ const Lists=()=>{
         }
 
     ]);
-    const mass=[34071000,34070977,34070976,34070971,34070943,34070905,34070893,34070870,34070869,34070859]
-    const [posts, setPosts] = useState([]);
+    
 
     async function fetchPosts(){
-        await axios.get(newsURL).then((response) => {
-            setPosts(response.data);
-        });
-    }
-
-
-    async function fetchNews(){
-        await axios.get(newsURL).then((response) => {
-            setPosts(response.data);
-        });
-        await posts.map(m=>{
-            axios.get(`https://hacker-news.firebaseio.com/v0/item/${m}.json`)
+        await idPost.map(async (m: number)=>{
+            await axios.get(`https://hacker-news.firebaseio.com/v0/item/${m}.json`)
                 .then(async (response)=>{
                     await setArr(pos=>[...pos,response.data]) 
                 })
-        })
+        }) 
     }
     
 
-    useEffect(()=>{
-        //fetchPosts();
-        setLoading(true);
+    useEffect( ()=>{
         console.log('true')
-        fetchNews();
-        setLoading(false);
-        console.log('false')
+        /* const fetchNotes = async () => {
+            await fetch('https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty')
+                .then((response) => response.json())
+                .then((data) => {
+                    const dat=data;
+                    setNotes(dat);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            };
+        fetchNotes();   */
+        
+        
+        /* async function fetchPosts(){
+            
+            await axios.get(newsURL).then((response) => {
+                const dat=response.data;
+                setPosts(dat);
+            }).catch((error) => {
+                console.error(error);
+            });
+            
+        }
+        fetchPosts(); */
+        
+
+
+
+        /* const fetchArr = async() => {
+            await notes.map(async note=>await fetch(`https://hacker-news.firebaseio.com/v0/item/${note}.json?print=pretty`)
+                .then((response) => response.json())
+                .then((data) => {
+                    const dat=data;
+                    setArr(pos=>[...pos,dat]);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+            )}; */
+        /* fetchArr();
+        console.log(mass)
+        console.log(notes)
+        console.log(posts) */
     } ,[])
+
+    useEffect( ()=>{
+       /*  const fetchArr = async() => {
+            await posts.map(async note=>await fetch(`https://hacker-news.firebaseio.com/v0/item/${note}.json?print=pretty`)
+                .then((response) => response.json())
+                .then((data) => {
+                    const dat=data;
+                    setArr(pos=>[...pos,dat]);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+            )};
+        fetchArr(); */
+        fetchPosts();
+    } ,[idPost])
+
+    
     
 
     return(
         <section className='lists'>
+            
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                     <TableHead>
@@ -92,9 +139,10 @@ const Lists=()=>{
                             <TableCell align="right">Date</TableCell>
                         </TableRow>
                     </TableHead>
-
+                    
                     <TableBody>
-                    {loading ? (<div>loading</div>) : (arr.map((l,i) => (
+                    
+                    {loading ? <div>loading</div> : (arr.map((l,i) => (
                         <TableRow
                         key={i}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
