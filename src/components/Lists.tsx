@@ -2,9 +2,10 @@ import { Button, Paper, Switch, Table, TableBody, TableCell, TableContainer, Tab
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../store/store";
-import List from "./List";
+
 import './lists.css';
 import { bestURL, newsURL } from "../variables/variables";
+import { converterDate } from "../utils/converter";
 
 export interface INewsItemType {
     by: string,
@@ -50,6 +51,9 @@ const Lists=()=>{
             
         }) 
     }
+    const showMore=()=>{
+
+    } 
 
     const refreshPage = ()=>{
         window.location.reload();
@@ -59,16 +63,19 @@ const Lists=()=>{
     useEffect( ()=>{
         fetchPosts();
         setLoading(false);
+        
     } ,[idPost])
 
-    
+    const onClickRow = (l: INewsItemType) => {
+        
+    };
     
 
     return(
         <section className='lists'>
             <div className='navigation'>
                 
-                <Button variant="outlined" onClick={()=>refreshPage()}>refresh page</Button>
+                <Button variant="outlined" >refresh page</Button>
 
                 <div className='switch'>
                     <div>Bests Posts</div>
@@ -85,7 +92,7 @@ const Lists=()=>{
             <TableContainer className="news" component={Paper}>
                 <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                     <TableHead>
-                        <TableRow>
+                        <TableRow >
                             <TableCell className="text">Name title</TableCell>
                             <TableCell className="text" align="right">Username</TableCell>
                             <TableCell className="text" align="right">Rating</TableCell>
@@ -94,8 +101,9 @@ const Lists=()=>{
                     </TableHead>
                     
                     <TableBody>
-                    {loading ? <div>loading</div> : (posts.map((l,i) => (
+                    {/* {loading ? <div>loading</div> : (posts.map((l,i) => (
                         <List 
+                            
                             by={l.by} 
                             descendants={l.descendants} 
                             id={l.id} 
@@ -106,8 +114,19 @@ const Lists=()=>{
                             key={i} 
                             title={l.title}
                         />
+                    )))} */}
+                    {loading ? <div>loading</div> : (posts.map((l,i) => (
+                        <TableRow
+                            key={l.id}
+                            onClick={()=>onClickRow(l)}
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                            <TableCell component="th" scope="row">{l.title}</TableCell>
+                            <TableCell align="right">{l.by}</TableCell>
+                            <TableCell align="right">{l.score}</TableCell>
+                            <TableCell align="right">{converterDate(l.time)}</TableCell>
+                        </TableRow>
                     )))}
-                    
                     </TableBody>
                 </Table>
             </TableContainer>

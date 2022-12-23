@@ -5,13 +5,16 @@ import { INewsItemType } from "./Lists";
 
 const List=({title,by, score,time,id,url}:INewsItemType,i:number)=>{
 
+    /* const onClickRow = (coin: TCoin) => {
+        
+    }; */
     return(
         <TableRow
             key={id}
-            onClick={()=>onClickRow(coin)}
+            /* onClick={()=>onClickRow(coin)} */
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
         >
-            <TableCell component="th" scope="row" onClick={()=>url}>{title}</TableCell>
+            <TableCell component="th" scope="row" >{title}</TableCell>
             <TableCell align="right">{by}</TableCell>
             <TableCell align="right">{score}</TableCell>
             <TableCell align="right">{converterDate(time)}</TableCell>
