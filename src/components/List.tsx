@@ -7,7 +7,8 @@ const List=({title,by, score,time,id,url}:INewsItemType,i:number)=>{
 
     return(
         <TableRow
-            key={i}
+            key={id}
+            onClick={()=>onClickRow(coin)}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
         >
             <TableCell component="th" scope="row" onClick={()=>url}>{title}</TableCell>
