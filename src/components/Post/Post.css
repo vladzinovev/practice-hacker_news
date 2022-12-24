@@ -22,3 +22,25 @@
 .post .card {
     margin-top: 20px;
 }
+
+.post .card .flex{
+    display: flex;
+}
+
+.post .card .flex .infouser{
+  margin-left: 10px;
+}
+
+.post .card .flex .username{
+    font-size: 1.175rem;
+    float: left;
+}
+.post .card .flex .date{
+    line-height: 1.75;
+    font-size: 0.875rem;
+    
+}
+
+.post .comments{
+    margin-top: 20px;
+}
