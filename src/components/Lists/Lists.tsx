@@ -5,18 +5,7 @@ import { StoreContext } from "../../store/store";
 import './lists.css';
 import { bestURL, newsURL } from "../../variables/variables";
 import List from "./List";
-
-export interface INewsItemType {
-    by: string,
-    descendants: number,
-    id: number,
-    score: number,
-    time: number,
-    title?: string,
-    type: string,
-    url: string
-}
-
+import { INewsItemType } from "../../utils/types";
 
 const Lists=()=>{
     const {idPost,url,setUrl,loading,setLoading}=useContext(StoreContext);
@@ -69,8 +58,6 @@ const Lists=()=>{
     return(
         <section className='lists'>
             <div className='navigation'>
-                
-                <Button variant="outlined" onClick={()=>{refreshPage()}}>refresh page</Button>
 
                 <div className='switch'>
                     <div>Bests Posts</div>
@@ -81,6 +68,8 @@ const Lists=()=>{
                     />
                     <div>New Posts</div>
                 </div>
+                <p>Hacker News</p>
+                <Button variant="outlined" onClick={()=>{refreshPage()}}>refresh page</Button>
             </div>
 
             <TableContainer className="news" component={Paper}>

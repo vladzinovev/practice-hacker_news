@@ -11,6 +11,17 @@
     display: flex;
     justify-content: center;
 }
+.lists .navigation p{
+    margin-right: 164px;
+    margin-top: 12px;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-weight: 500;
+    font-size: 1.475rem;
+    line-height: 0.75;
+    letter-spacing: 0.02857em;
+    text-transform: uppercase;
+    min-width: 64px;
+}
 .lists .navigation .switch div{
     text-transform: uppercase;
     font-family: "Roboto","Helvetica","Arial",sans-serif;
@@ -27,7 +38,7 @@
     border:1px solid rgba(25, 118, 210, 0.5);
 }
 .lists .news .text{
-    font-weight: 700;
+    font-weight: 600;
     font-size: 1.075rem;
 }
 

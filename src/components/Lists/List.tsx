@@ -1,7 +1,8 @@
 import { TableCell, TableRow } from "@mui/material";
 import { converterDate } from "../../utils/converter";
-import { INewsItemType } from "./Lists";
+
 import {NavLink} from 'react-router-dom';
+import { INewsItemType } from "../../utils/types";
 
 const List=({title,by, score,time,id}:INewsItemType,i:number)=>{
 
