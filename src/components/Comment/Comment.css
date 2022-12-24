@@ -1,0 +1,20 @@
+.comments{
+    margin-top: 20px;
+    border:1px solid rgba(25, 118, 210, 0.5);
+}
+
+.comments .comment{
+    margin-top: 20px;
+}
+.comments .comment .flex{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.comments .comment .flex .cusername{
+    margin-left: 10px;
+}
+.comments .comment .flex .cdate{
+    margin-right: 10px;
+}

@@ -7,6 +7,7 @@ import { IComment, INewsItemType } from "../../utils/types";
 import './Post.css';
 import logo from '../../image/logo.png'
 import { converterDate } from "../../utils/converter";
+import Comment from '../Comment/comment'
 
 
     /* 
@@ -38,6 +39,7 @@ const Post=()=>{
     }
 
     async function fetchComments(){
+        setComments([]);
         postItem?.kids?.map((c,i)=>(
             axios.get(`https://hacker-news.firebaseio.com/v0/item/${c}.json`)
             .then(async (response)=>{
@@ -47,7 +49,8 @@ const Post=()=>{
         ))
         
     }
-    const showComment=()=>{
+    const showComment=(e:any)=>{
+        e.preventDefault()
         setShow(prevShow=>!prevShow);
     }
 
@@ -57,7 +60,6 @@ const Post=()=>{
     },[params.id]);
 
     useEffect(()=>{
-        
         fetchComments();
     },[show]);
 
@@ -103,25 +105,20 @@ const Post=()=>{
 
                 <CardActions>
                     <Button size="medium"><Link href={postItem?.url}>URL</Link></Button>
-                    <Button size="medium" onClick={()=>showComment()}>Comments :{postItem?.descendants}</Button>
+                    <Button size="medium" onClick={(e)=>showComment(e)}>Comments :{postItem?.descendants}</Button>
                 </CardActions>
 
             </Card>
             {show && 
                 (!postItem?.kids ? (
-                    <Card>
-                        <div>There are no comments</div>
+                    <Card className="nocomment">
+                        <div className="textcomment">There are no comments</div>
                     </Card> 
                 ): comments.map((c,i)=>(
-                    <Card className="comments">
-                        <div className="comment">
-                            <p>{c.text}</p>
-                            <div>
-                                <p>{c.by}</p>
-                                <p>{converterDate(c.time)}</p>
-                            </div>
-                        </div>
-                    </Card>
+                    <Comment by={c.by} id={c.id} parent={c.parent} text={c.text} time={c.time} type={c.type}/>
+
+                    
+
                 ))
                 )
             }
