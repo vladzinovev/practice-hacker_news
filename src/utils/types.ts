@@ -2,7 +2,7 @@ export interface INewsItemType {
     by: string,
     descendants: number,
     id: number,
-    kids?:Array<number>,
+    kids?:[],
     score: number,
     time: number,
     title?: string,
@@ -13,7 +13,7 @@ export interface INewsItemType {
 export interface IComment {
     by: string,
     id: number,
-    kids?:Array<number>,
+    kids?:[],
     parent:number
     text: string,
     time: number,

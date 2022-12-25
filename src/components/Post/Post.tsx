@@ -19,7 +19,7 @@ import Comment from '../Comment/comment'
     список комментариев в виде дерева (kids) */
 
 const Post=()=>{
-    const {loading,setLoading}=useContext(StoreContext);
+    const [loading, setLoading] = useState(false);
     let params = useParams();
     const [postItem, setPostItem]=useState<INewsItemType>();
     const [comments,setComments]=useState<IComment[]>([]);
@@ -44,14 +44,13 @@ const Post=()=>{
             axios.get(`https://hacker-news.firebaseio.com/v0/item/${c}.json`)
             .then(async (response)=>{
                 await setComments(pos=>[...pos,response.data]);
-                console.log(response.data)
             })
         ))
         
     }
     const showComment=(e:any)=>{
         e.preventDefault()
-        setShow(prevShow=>!prevShow);
+        setShow(true);
     }
 
     useEffect(()=>{
@@ -60,7 +59,9 @@ const Post=()=>{
     },[params.id]);
 
     useEffect(()=>{
+        setLoading(true);
         fetchComments();
+        setLoading(false);
     },[show]);
 
 
@@ -104,23 +105,30 @@ const Post=()=>{
                 </CardContent>
 
                 <CardActions>
-                    <Button size="medium"><Link href={postItem?.url}>URL</Link></Button>
+                    <Button size="medium"><Link href={postItem?.url}>{ postItem?.url ? <p>URL</p> : <p>NO URL</p> }</Link></Button>
                     <Button size="medium" onClick={(e)=>showComment(e)}>Comments :{postItem?.descendants}</Button>
                 </CardActions>
 
             </Card>
             {show && 
-                (!postItem?.kids ? (
-                    <Card className="nocomment">
-                        <div className="textcomment">There are no comments</div>
-                    </Card> 
-                ): comments.map((c,i)=>(
-                    <Comment by={c.by} id={c.id} parent={c.parent} text={c.text} time={c.time} type={c.type}/>
-
-                    
-
-                ))
+                (loading ? (
+                    <Card className="block1">
+                        <div className="textcomment">Loading</div>
+                    </Card>
+                ):(
+                    !postItem?.kids ? (
+                        <Card className="nocomment">
+                            <div className="textcomment">There are no comments</div>
+                        </Card> 
+                    ): (
+                        comments.map((c,i)=>(
+                        <div className="block1">
+                            <Comment by={c.by} id={c.id} parent={c.parent} kids={c?.kids} text={c.text} time={c.time} type={c.type}/>
+                        </div>
+                    )))
                 )
+                )
+                
             }
             
             
