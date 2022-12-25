@@ -1,0 +1,56 @@
+.user .navigation{
+    
+    display: flex;
+    justify-content: space-between;
+}
+
+.user .navigation p{
+    margin-top: 12px;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-weight: 500;
+    font-size: 1.475rem;
+    line-height: 0.75;
+    letter-spacing: 0.02857em;
+    text-transform: uppercase;
+    min-width: 64px;
+}
+
+.user .card {
+    margin-top: 20px;
+}
+
+.user .card .flex{
+    display: flex;
+}
+
+.user .card .flex .infouser{
+  margin-left: 10px;
+}
+
+.user .card .flex .infouser .username{
+    margin-top: 5px;
+    margin-left: 10px;
+    font-size: 1.575rem;
+    
+}
+
+.user .nocomment{
+    margin-top: 20px;
+    font-size: 1.175rem;
+    border:1px solid rgba(25, 118, 210, 0.5);
+    height: 50px;
+}
+.user .nocomment .textcomment{
+    margin-top: 12px;
+}
+.user .card .aboutuser{
+    margin-top: 15px;
+    text-align: left
+}
+.user .card .aboutuser p{
+    margin-top: 5px;
+}
+.user .card .aboutuser div{
+    margin-top: 5px;
+}
+
