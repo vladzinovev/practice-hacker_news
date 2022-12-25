@@ -19,3 +19,11 @@ export interface IComment {
     time: number,
     type: string
 }
+
+export interface IUser{
+    about?:string,
+    created:number,
+    id:number,
+    karma:number,
+    submitted:[]
+}

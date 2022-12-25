@@ -11,6 +11,7 @@ const Lists=()=>{
     const {idPost,url,setUrl,loading,setLoading}=useContext(StoreContext);
     const [posts, setPosts]=useState<INewsItemType[]>([]);
     const [checked, setChecked] = useState(true);
+    
 
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
