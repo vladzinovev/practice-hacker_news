@@ -8,15 +8,15 @@ import List from "./List";
 import { INewsItemType } from "../../utils/types";
 
 const Lists=()=>{
-    const {idPost,url,setUrl,loading,setLoading}=useContext(StoreContext);
+    const {idPost,url,setUrl,loading,setLoading,checked,setChecked}=useContext(StoreContext);
     const [posts, setPosts]=useState<INewsItemType[]>([]);
-    const [checked, setChecked] = useState(true);
+    
     const [click,setClick]=useState<number>(1);
     
 
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setChecked(event.target.checked);
+    const handleChange = () => {
+        setChecked(!checked);
         if(!checked){
             setLoading(true);
             setUrl(newsURL);

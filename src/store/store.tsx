@@ -11,6 +11,8 @@ interface IStoreContext{
     setUrl:any,
     loading:boolean, 
     setLoading:any,
+    checked:boolean, 
+    setChecked:any,
 }
 
 export const StoreContext=createContext<IStoreContext>({
@@ -18,13 +20,16 @@ export const StoreContext=createContext<IStoreContext>({
     url: '',
     setUrl: undefined,
     loading: false,
-    setLoading: undefined
+    setLoading: undefined,
+    checked:true, 
+    setChecked:undefined
 })
 
 const StoreComponent=({children}:{children:ReactNode})=>{
     const [idPost, setIdPost] = useState<any[]>([]);
     const [url,setUrl]=useState<string>(newsURL);
     const [loading, setLoading] = useState(false);
+    const [checked, setChecked] = useState(true);
     
 
     async function fetchIdPost(url: string){
@@ -49,7 +54,7 @@ const StoreComponent=({children}:{children:ReactNode})=>{
     if (!idPost) return null;
 
   return (
-    <StoreContext.Provider value={{idPost,url,setUrl,loading,setLoading}}>
+    <StoreContext.Provider value={{idPost,url,setUrl,loading,setLoading,checked,setChecked}}>
         {children}
     </StoreContext.Provider>
   )
