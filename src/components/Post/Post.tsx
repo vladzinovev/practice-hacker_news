@@ -1,7 +1,7 @@
 import { Avatar, Button, Card, CardActionArea, CardActions, CardContent, Link, Stack, Typography} from "@mui/material";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import {NavLink, useParams} from 'react-router-dom';
+import {NavLink, useNavigate, useParams} from 'react-router-dom';
 import { StoreContext } from "../../store/store";
 import { IComment, INewsItemType } from "../../utils/types";
 import './Post.css';
@@ -21,6 +21,7 @@ import Comment from '../Comment/comment'
 const Post=()=>{
     const [loading, setLoading] = useState(false);
     let params = useParams();
+    let navigate = useNavigate();
     const [postItem, setPostItem]=useState<INewsItemType>();
     const [comments,setComments]=useState<IComment[]>([]);
     const [show,setShow]=useState(false);
@@ -32,7 +33,9 @@ const Post=()=>{
             console.log(response.data)
         })
     }
-    
+    const goBack = () => {
+        navigate(-1);
+    };
 
     const refreshPage = ()=>{
         window.location.reload();
@@ -45,17 +48,14 @@ const Post=()=>{
             .then(async (response)=>{
                 await setComments(pos=>[...pos,response.data]);
             })
-        ))
-        
+        ))  
     }
-    const showComment=(e:any)=>{
-        e.preventDefault()
+    const showComment=()=>{
         setShow(true);
     }
 
     useEffect(()=>{
         fetchPost();
-        fetchComments();
     },[params.id]);
 
     useEffect(()=>{
@@ -69,7 +69,8 @@ const Post=()=>{
         <section className='post'>
             <div className='navigation'>
 
-                <Button variant="outlined"><NavLink className='navlink' to="/">go back</NavLink></Button>
+                
+                <Button variant="outlined" className='button' onClick={goBack}>go back</Button>
                 <p>Hacker News</p>
                 <Button variant="outlined" onClick={()=>{refreshPage()}}>refresh page</Button>
                 
@@ -106,7 +107,7 @@ const Post=()=>{
 
                 <CardActions>
                     <Button size="medium"><Link href={postItem?.url}>{ postItem?.url ? <p>URL</p> : <p>NO URL</p> }</Link></Button>
-                    <Button size="medium" onClick={(e)=>showComment(e)}>Comments :{postItem?.descendants}</Button>
+                    <Button size="medium" onClick={(e)=>showComment()}>Comments :{postItem?.descendants}</Button>
                 </CardActions>
 
             </Card>

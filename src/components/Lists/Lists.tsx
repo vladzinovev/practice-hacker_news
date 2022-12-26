@@ -11,6 +11,7 @@ const Lists=()=>{
     const {idPost,url,setUrl,loading,setLoading}=useContext(StoreContext);
     const [posts, setPosts]=useState<INewsItemType[]>([]);
     const [checked, setChecked] = useState(true);
+    const [click,setClick]=useState<number>(1);
     
 
 
@@ -26,23 +27,29 @@ const Lists=()=>{
         }
     };
     
-    
+   
 
-    async function fetchPosts(){
+    async function fetchPosts(click:number){
+        const max=21*click;
+        const min=max-21;
         setPosts([]);
         await idPost.map(async (m: number,length)=>{
-            if(length<15){
+            if(length>min && length<max){
                 await axios.get(`https://hacker-news.firebaseio.com/v0/item/${m}.json`)
                 .then(async (response)=>{
-                    await setPosts(pos=>[...pos,response.data]) 
+                    await setPosts(pos=>[...pos,response.data])
+                    
                 })
             }
+            /* await axios.get(`https://hacker-news.firebaseio.com/v0/item/${m}.json`)
+                .then(async (response)=>{
+                    await setPosts(pos=>[...pos,response.data])
+                    
+                }) */
             
         }) 
     }
-    const showMore=()=>{
 
-    } 
 
     const refreshPage = ()=>{
         window.location.reload();
@@ -50,11 +57,14 @@ const Lists=()=>{
     
 
     useEffect( ()=>{
-        fetchPosts();
+        fetchPosts(click);
         setLoading(false);
-        
-    } ,[idPost])
+        console.log(posts);
+
+    } ,[idPost,click])
     
+   
+
 
     return(
         <section className='lists'>
@@ -103,7 +113,14 @@ const Lists=()=>{
                 </Table>
             </TableContainer>
 
-            <Button className="footerbutton" variant="outlined" onClick={()=>{}}>more</Button>
+            <div className="footer">
+                {click===1 ? <Button className="footerbutton" disabled variant="outlined" onClick={()=>{setClick(click-1)}}>previousPage</Button> : <Button className="footerbutton" variant="outlined" onClick={()=>{setClick(click-1)}}>previous Page</Button>}
+                <div>Design by Vlad</div>
+                {posts.length<20 ? <Button className="footerbutton" disabled variant="outlined" onClick={()=>{setClick(click+1)}}>next Page</Button> : <Button className="footerbutton" variant="outlined" onClick={()=>{setClick(click+1)}}>next Page</Button>}
+                
+            </div>
+
+            
         </section>
         
     )
