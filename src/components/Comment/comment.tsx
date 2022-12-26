@@ -1,30 +1,29 @@
-import { Card, TableCell, TableRow,Button } from "@mui/material";
+import { Card, Button } from "@mui/material";
 import { converterDate } from "../../utils/converter";
-
 import {NavLink} from 'react-router-dom';
-import { IComment, INewsItemType } from "../../utils/types";
+import { IComment} from "../../utils/types";
 import './Comment.css';
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { StoreContext } from "../../store/store";
+import { itemUrl } from "../../variables/variables";
 
 const Comment=({text,by,time,kids}:IComment)=>{
     const [kid,setKid]=useState<IComment[]>([]);
     const {loading,setLoading}=useContext(StoreContext);
+    const [show,setShow]=useState(false);
     
-
     async function fetchComments(){
         setKid([]);
         
         kids?.map((c,i)=>(
-            axios.get(`https://hacker-news.firebaseio.com/v0/item/${c}.json`)
+            axios.get(`${itemUrl}${c}.json`)
             .then(async (response)=>{
                 await setKid(pos=>[...pos,response.data]);
             })
         ))
-        
     }
-    const [show,setShow]=useState(false);
+    
     const showComment=(e:any)=>{
         e.preventDefault()
         setShow(prevShow=>!prevShow);
@@ -38,7 +37,6 @@ const Comment=({text,by,time,kids}:IComment)=>{
 
     return(
         <div>
-            
             {loading ? (
                 <div style={{margin:'20px 0 0 100px'}}>
                     <Card className="loading">
@@ -55,17 +53,19 @@ const Comment=({text,by,time,kids}:IComment)=>{
                                     <NavLink style={{color: '#1976d2'}} to={`/userid/${by}`}>
                                         {by}
                                     </NavLink>
-                                    
                                 </p>
                                 <p className="cdate">{converterDate(time)}</p>
                             </div>
                         </div>
-                        
-                        
                     </Card>
+
                     {
-                            kid.length>0 && <Button size="medium" onClick={(e)=>showComment(e)}>View the answer</Button>
+                            kid.length>0 && 
+                                <Button size="medium" onClick={(e)=>showComment(e)}>
+                                    View the answer
+                                </Button>
                     }
+
                     {show && 
                         (loading ? (
                             <div style={{margin:'20px 0 0 100px'}}>
@@ -79,17 +79,9 @@ const Comment=({text,by,time,kids}:IComment)=>{
                             </div>
                         ))))
                     }
-                    
-                        
-                    
                 </div>
-                
-                
-                
             )
-        
             } 
-            
         </div>  
     )
 }

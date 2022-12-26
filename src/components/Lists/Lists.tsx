@@ -10,11 +10,8 @@ import { INewsItemType } from "../../utils/types";
 const Lists=()=>{
     const {idPost,setUrl,loading,setLoading,checked,setChecked}=useContext(StoreContext);
     const [posts, setPosts]=useState<INewsItemType[]>([]);
-    
     const [click,setClick]=useState<number>(1);
     
-
-
     const handleChange = () => {
         setChecked(!checked);
         if(!checked){
@@ -27,8 +24,6 @@ const Lists=()=>{
         }
     };
     
-   
-
     async function fetchPosts(click:number){
         const max=21*click;
         const min=max-21;
@@ -44,11 +39,9 @@ const Lists=()=>{
         }) 
     }
 
-
     const refreshPage = ()=>{
         window.location.reload();
     }
-    
 
     useEffect( ()=>{
         fetchPosts(click);
@@ -57,9 +50,6 @@ const Lists=()=>{
 
     } ,[idPost,click])
     
-   
-
-
     return(
         <section className='lists'>
             <div className='navigation'>
@@ -110,13 +100,9 @@ const Lists=()=>{
             <div className="footer">
                 {click===1 ? <Button className="footerbutton" disabled variant="outlined" onClick={()=>{setClick(click-1)}}>previousPage</Button> : <Button className="footerbutton" variant="outlined" onClick={()=>{setClick(click-1)}}>previous Page</Button>}
                 <div>Design by Vlad</div>
-                {posts.length<20 ? <Button className="footerbutton" disabled variant="outlined" onClick={()=>{setClick(click+1)}}>next Page</Button> : <Button className="footerbutton" variant="outlined" onClick={()=>{setClick(click+1)}}>next Page</Button>}
-                
+                {posts.length<20 ? <Button className="footerbutton" disabled variant="outlined" onClick={()=>{setClick(click+1)}}>next Page</Button> : <Button className="footerbutton" variant="outlined" onClick={()=>{setClick(click+1)}}>next Page</Button>}  
             </div>
-
-            
         </section>
-        
     )
 }
 export default Lists;

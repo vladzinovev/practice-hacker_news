@@ -1,9 +1,8 @@
-import { Avatar, Button, Card,Stack, CardActions, CardContent, Typography } from "@mui/material";
+import { Avatar, Button, Card,Stack,CardContent} from "@mui/material";
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
-import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import logo from '../../image/logo.png'
-import { StoreContext } from "../../store/store";
 import { converterDate } from "../../utils/converter";
 import { IUser } from "../../utils/types";
 import {  userUrl } from "../../variables/variables";
@@ -12,7 +11,6 @@ import './User.css';
 const User=()=>{
     let params = useParams();
     let navigate = useNavigate();
-
     const [user, setUser]=useState<IUser>();
 
     async function fetchUser(){
@@ -26,6 +24,7 @@ const User=()=>{
     const goBack = () => {
         navigate(-1);
     };
+
     const refreshPage = ()=>{
         window.location.reload();
     }
@@ -34,22 +33,17 @@ const User=()=>{
         fetchUser();
     },[params.by]);
 
-    
-
     return(
         
         <section className='user'>
             <div className='navigation'>
-
                 <Button variant="outlined" onClick={goBack}>go back</Button>
                 <p>Hacker News</p>
                 <Button variant="outlined" onClick={()=>{refreshPage()}}>refresh page</Button>
-                
             </div>
 
             <Card className="card">
                 <CardContent>
-                    
                     <div className="flex">
                         <Stack direction="row" spacing={2}>
                             <Avatar
@@ -62,25 +56,16 @@ const User=()=>{
                         <div className="infouser">
                             <p className="username">{params.by}</p>
                         </div>
-                        
                     </div>
                     <div className="aboutuser">
-                        
                         <p>Creation date of the user, in Unix Time: {converterDate(user?.created)}</p>
                         <p>The user's karma: {user?.karma}</p>
                         {!user?.about ? <div>no Self-description of the user</div> : <div>The user's self-description:<a href={user?.about}>{user?.about}</a></div>}
                         <p>{user?.submitted.length} stories, polls and comments by {params.by}</p>
-                        
                     </div>
                 </CardContent>
-
-
             </Card>
-            
-                
-            
         </section>
-        
     )
 }
 export default User;

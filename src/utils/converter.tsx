@@ -8,4 +8,4 @@ export function converterDate (times:number | null | undefined) {
       })
   }
     
-  }
+}

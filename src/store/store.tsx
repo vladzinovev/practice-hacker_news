@@ -2,9 +2,6 @@ import axios from "axios";
 import { createContext, ReactNode, SetStateAction, useEffect, useState } from "react";
 import { newsURL } from "../variables/variables";
 
-
-
-
 interface IStoreContext{
     idPost:any[],
     url:string,
@@ -31,7 +28,6 @@ const StoreComponent=({children}:{children:ReactNode})=>{
     const [loading, setLoading] = useState(false);
     const [checked, setChecked] = useState(true);
     
-
     async function fetchIdPost(url: string){
         await axios.get(url).then((response) => {
             setIdPost(response.data);
@@ -49,14 +45,12 @@ const StoreComponent=({children}:{children:ReactNode})=>{
         } 
     }, [url]);
 
-
-
     if (!idPost) return null;
 
-  return (
-    <StoreContext.Provider value={{idPost,url,setUrl,loading,setLoading,checked,setChecked}}>
-        {children}
-    </StoreContext.Provider>
+    return (
+        <StoreContext.Provider value={{idPost,url,setUrl,loading,setLoading,checked,setChecked}}>
+            {children}
+        </StoreContext.Provider>
   )
 }
 export default StoreComponent;

@@ -1,4 +1,4 @@
-import { Avatar, Button, Card, CardActionArea, CardActions, CardContent, Link, Stack, Typography} from "@mui/material";
+import { Avatar, Button, Card, CardActions, CardContent, Link, Stack, Typography} from "@mui/material";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import {NavLink, useNavigate, useParams} from 'react-router-dom';
@@ -26,6 +26,7 @@ const Post=()=>{
             console.log(response.data)
         })
     }
+    
     const goBack = () => {
         navigate(-1);
     };
@@ -43,6 +44,7 @@ const Post=()=>{
             })
         ))  
     }
+
     const showComment=()=>{
         setShow(true);
     }
@@ -63,19 +65,13 @@ const Post=()=>{
     return(
         <section className='post'>
             <div className='navigation'>
-
-                
                 <Button variant="outlined" className='button' onClick={goBack}>go back</Button>
                 <p>Hacker News</p>
                 <Button variant="outlined" onClick={()=>{refreshPage()}}>refresh page</Button>
-                
             </div>
-
             
             <Card className="card">
-            
                 <CardContent>
-                    
                     <div className="flex">
                         <Stack direction="row" spacing={2}>
                             <Avatar
@@ -93,7 +89,6 @@ const Post=()=>{
                             </p>
                             <p className="date">{converterDate(postItem?.time)}</p>
                         </div>
-                        
                     </div>
                     <Typography variant="h5" >
                         {postItem?.title}
@@ -104,8 +99,8 @@ const Post=()=>{
                     <Button size="medium"><Link href={postItem?.url}>{ postItem?.url ? <p>URL</p> : <p>NO URL</p> }</Link></Button>
                     <Button size="medium" onClick={()=>showComment()}>Comments :{postItem?.descendants}</Button>
                 </CardActions>
-
             </Card>
+
             {show && 
                 (loading ? (
                     <Card className="block1">
@@ -124,14 +119,7 @@ const Post=()=>{
                     )))
                 )
                 )
-                
             }
-            
-            
-            
-            
-            
-
         </section>
     )
 }

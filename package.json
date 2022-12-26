@@ -1,5 +1,6 @@
 {
   "name": "hn",
+  "homepage": "https://vladzinovev.github.io/practice-hacker_news/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
