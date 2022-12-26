@@ -8,18 +8,11 @@ import './Post.css';
 import logo from '../../image/logo.png'
 import { converterDate } from "../../utils/converter";
 import Comment from '../Comment/comment'
+import { itemUrl } from "../../variables/variables";
 
-
-    /* 
-    ссылку на новость                 (url)
-    заголовок новости                 (title)
-    дату                              (time)
-    автора                            (by)
-    счётчик количества комментариев   (descendants)
-    список комментариев в виде дерева (kids) */
 
 const Post=()=>{
-    const [loading, setLoading] = useState(false);
+    const {loading,setLoading}=useContext(StoreContext);
     let params = useParams();
     let navigate = useNavigate();
     const [postItem, setPostItem]=useState<INewsItemType>();
@@ -27,7 +20,7 @@ const Post=()=>{
     const [show,setShow]=useState(false);
 
     async function fetchPost(){
-        await axios.get(`https://hacker-news.firebaseio.com/v0/item/${params.id}.json`)
+        await axios.get(`${itemUrl}${params.id}.json`)
         .then(async (response)=>{
             await setPostItem(response.data); 
             console.log(response.data)
@@ -44,7 +37,7 @@ const Post=()=>{
     async function fetchComments(){
         setComments([]);
         postItem?.kids?.map((c,i)=>(
-            axios.get(`https://hacker-news.firebaseio.com/v0/item/${c}.json`)
+            axios.get(`${itemUrl}${c}.json`)
             .then(async (response)=>{
                 await setComments(pos=>[...pos,response.data]);
             })
@@ -55,7 +48,9 @@ const Post=()=>{
     }
 
     useEffect(()=>{
+        setLoading(true);
         fetchPost();
+        setLoading(false);
     },[params.id]);
 
     useEffect(()=>{
@@ -107,14 +102,14 @@ const Post=()=>{
 
                 <CardActions>
                     <Button size="medium"><Link href={postItem?.url}>{ postItem?.url ? <p>URL</p> : <p>NO URL</p> }</Link></Button>
-                    <Button size="medium" onClick={(e)=>showComment()}>Comments :{postItem?.descendants}</Button>
+                    <Button size="medium" onClick={()=>showComment()}>Comments :{postItem?.descendants}</Button>
                 </CardActions>
 
             </Card>
             {show && 
                 (loading ? (
                     <Card className="block1">
-                        <div className="textcomment">Loading</div>
+                        <div className="textcomment">Loading...</div>
                     </Card>
                 ):(
                     !postItem?.kids ? (

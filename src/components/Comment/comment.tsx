@@ -4,12 +4,13 @@ import { converterDate } from "../../utils/converter";
 import {NavLink} from 'react-router-dom';
 import { IComment, INewsItemType } from "../../utils/types";
 import './Comment.css';
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { StoreContext } from "../../store/store";
 
 const Comment=({text,by,time,kids}:IComment)=>{
     const [kid,setKid]=useState<IComment[]>([]);
-    const [loading, setLoading] = useState(false);
+    const {loading,setLoading}=useContext(StoreContext);
     
 
     async function fetchComments(){

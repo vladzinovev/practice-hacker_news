@@ -3,12 +3,12 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../../store/store";
 import './lists.css';
-import { bestURL, newsURL } from "../../variables/variables";
+import { bestURL, itemUrl, newsURL } from "../../variables/variables";
 import List from "./List";
 import { INewsItemType } from "../../utils/types";
 
 const Lists=()=>{
-    const {idPost,url,setUrl,loading,setLoading,checked,setChecked}=useContext(StoreContext);
+    const {idPost,setUrl,loading,setLoading,checked,setChecked}=useContext(StoreContext);
     const [posts, setPosts]=useState<INewsItemType[]>([]);
     
     const [click,setClick]=useState<number>(1);
@@ -35,18 +35,12 @@ const Lists=()=>{
         setPosts([]);
         await idPost.map(async (m: number,length)=>{
             if(length>min && length<max){
-                await axios.get(`https://hacker-news.firebaseio.com/v0/item/${m}.json`)
+                await axios.get(`${itemUrl}${m}.json`)
                 .then(async (response)=>{
                     await setPosts(pos=>[...pos,response.data])
                     
                 })
             }
-            /* await axios.get(`https://hacker-news.firebaseio.com/v0/item/${m}.json`)
-                .then(async (response)=>{
-                    await setPosts(pos=>[...pos,response.data])
-                    
-                }) */
-            
         }) 
     }
 
@@ -95,7 +89,7 @@ const Lists=()=>{
                     </TableHead>
                     
                     <TableBody>
-                    {loading ? <div>loading</div> : (posts.map((l,i) => (
+                    {loading ? <div>Loading...</div> : (posts.map((l,i) => (
                         <List 
                             by={l.by} 
                             descendants={l.descendants} 
