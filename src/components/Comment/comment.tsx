@@ -50,7 +50,7 @@ const Comment=({text,by,time,kids}:IComment)=>{
                             <div className="ctext" dangerouslySetInnerHTML={{__html:text}}></div>
                             <div className="flex">
                                 <p className="cusername">
-                                    <NavLink style={{color: '#1976d2'}} to={`/userid/${by}`}>
+                                    <NavLink style={{color: '#1976d2'}} to={`/users/${by}`}>
                                         {by}
                                     </NavLink>
                                 </p>

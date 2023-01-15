@@ -23,7 +23,6 @@ const Post=()=>{
         await axios.get(`${itemUrl}${params.id}.json`)
         .then(async (response)=>{
             await setPostItem(response.data); 
-            console.log(response.data)
         })
     }
     
@@ -83,7 +82,7 @@ const Post=()=>{
                         
                         <div className="infouser">
                             <p className="username">
-                                <NavLink style={{color: '#1976d2'}} to={`/userid/${postItem?.by}`}>
+                                <NavLink style={{color: '#1976d2'}} to={`/users/${postItem?.by}`}>
                                     {postItem?.by}
                                 </NavLink>
                             </p>

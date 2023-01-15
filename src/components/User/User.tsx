@@ -60,7 +60,7 @@ const User=()=>{
                     <div className="aboutuser">
                         <p>Creation date of the user, in Unix Time: {converterDate(user?.created)}</p>
                         <p>The user's karma: {user?.karma}</p>
-                        {!user?.about ? <div>no Self-description of the user</div> : <div>The user's self-description:<a href={user?.about}>{user?.about}</a></div>}
+                        {!user?.about ? <div>no Self-description of the user</div> : <div>The user's self-description: <a href={user?.about}>{user?.about}</a></div>}
                         <p>{user?.submitted.length} stories, polls and comments by {params.by}</p>
                     </div>
                 </CardContent>

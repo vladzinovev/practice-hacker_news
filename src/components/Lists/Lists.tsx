@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../../store/store";
 import './lists.css';
 import { bestURL, itemUrl, newsURL } from "../../variables/variables";
-import List from "./List";
+import ListItem from "./ListItem";
 import { INewsItemType } from "../../utils/types";
 
 const Lists=()=>{
@@ -14,29 +14,33 @@ const Lists=()=>{
     
     const handleChange = () => {
         setChecked(!checked);
-        if(!checked){
-            setLoading(true);
-            setUrl(newsURL);
-        }
-        else{
-            setLoading(true);
-            setUrl(bestURL);
-        }
+        setLoading(true);
+        checked ? setUrl(bestURL) : setUrl(newsURL)
+        
     };
     
     async function fetchPosts(click:number){
         const max=21*click;
         const min=max-21;
         setPosts([]);
-        await idPost.map(async (m: number,length)=>{
-            if(length>min && length<max){
+
+        const ids = idPost.slice(min, max) 
+        await ids.map(async (id: number) => { 
+            await axios.get(`${itemUrl}${id}.json`) 
+            .then((response)=>{ 
+                setPosts(pos=>[...pos,response.data]) 
+            }) 
+        }) 
+        /* await idPost.map(async (m: number,len)=>{
+            if(len>min && len<max){
                 await axios.get(`${itemUrl}${m}.json`)
                 .then(async (response)=>{
                     await setPosts(pos=>[...pos,response.data])
                     
                 })
             }
-        }) 
+        })  */
+
     }
 
     const refreshPage = ()=>{
@@ -46,7 +50,6 @@ const Lists=()=>{
     useEffect( ()=>{
         fetchPosts(click);
         setLoading(false);
-        console.log(posts);
 
     } ,[idPost,click])
     
@@ -79,17 +82,8 @@ const Lists=()=>{
                     </TableHead>
                     
                     <TableBody>
-                    {loading ? <div>Loading...</div> : (posts.map((l,i) => (
-                        <List 
-                            by={l.by} 
-                            descendants={l.descendants} 
-                            id={l.id} 
-                            score={l.score} 
-                            time={l.time} 
-                            type={l.type} 
-                            url={l.url} 
-                            key={l.id} 
-                            title={l.title}
+                    {loading ? <div>Loading...</div> : (posts.map((post,i) => (
+                        <ListItem  item={post}
                         />
                     )))} 
                     
@@ -98,9 +92,9 @@ const Lists=()=>{
             </TableContainer>
 
             <div className="footer">
-                {click===1 ? <Button className="footerbutton" disabled variant="outlined" onClick={()=>{setClick(click-1)}}>previousPage</Button> : <Button className="footerbutton" variant="outlined" onClick={()=>{setClick(click-1)}}>previous Page</Button>}
+                <Button className="footerbutton" disabled={click === 1 ? true : false } variant="outlined" onClick={()=>{setClick(click-1)}}>previous Page</Button>
                 <div>Design by Vlad</div>
-                {posts.length<20 ? <Button className="footerbutton" disabled variant="outlined" onClick={()=>{setClick(click+1)}}>next Page</Button> : <Button className="footerbutton" variant="outlined" onClick={()=>{setClick(click+1)}}>next Page</Button>}  
+                <Button className="footerbutton" disabled={posts.length<20 ? true : false} variant="outlined" onClick={()=>{setClick(click+1)}}>next Page</Button>  
             </div>
         </section>
     )

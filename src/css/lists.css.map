@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAEI,MAFE,CAEF,OAAO,CAAA;EACH,OAAO,EAAE,IAAI;EACb,eAAe,EAAE,aAAa;CACjC",
-    "sources": [
-        "../components/lists.scss"
-    ],
-    "names": [],
-    "file": "lists.css"
-}
