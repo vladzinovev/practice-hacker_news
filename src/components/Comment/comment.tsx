@@ -8,7 +8,8 @@ import axios from "axios";
 import { StoreContext } from "../../store/store";
 import { itemUrl } from "../../variables/variables";
 
-const Comment = ({ item }: AllComment) => {
+const Comment = ({ item,level=1 }: AllComment) => {
+  const [clickSize, setClickSize]=useState<number>(level);
   const [kid, setKid] = useState<IComment[]>([]);
   const { loading, setLoading } = useContext(StoreContext);
   const [show, setShow] = useState(false);
@@ -25,6 +26,8 @@ const Comment = ({ item }: AllComment) => {
 
   const showComment = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
+    setClickSize(clickSize+1);
+    console.log(clickSize)
     setShow((prevShow) => !prevShow);
   };
 
@@ -44,12 +47,8 @@ const Comment = ({ item }: AllComment) => {
         </div>
       ) : (
         <div>
-          <Card className="comments" style={{ margin: "20px 0 0 50px" }}>
+          <Card className="comments" style={{ margin: "10px 0 0 20px" }}>
             <div className="comment">
-              <div
-                className="ctext"
-                dangerouslySetInnerHTML={{ __html: item.text }}
-              ></div>
               <div className="flex">
                 <p className="cusername">
                   <NavLink
@@ -61,6 +60,10 @@ const Comment = ({ item }: AllComment) => {
                 </p>
                 <p className="cdate">{converterDate(item.time)}</p>
               </div>
+              <div
+                className="ctext"
+                dangerouslySetInnerHTML={{ __html: item.text }}
+              ></div>
             </div>
           </Card>
 
@@ -72,15 +75,15 @@ const Comment = ({ item }: AllComment) => {
 
           {show &&
             (loading ? (
-              <div style={{ margin: "20px 0 0 100px" }}>
+              <div style={{ margin: "20px 0 0 40px" }}>
                 <Card className="loading">
                   <div className="textcomment">Loading</div>
                 </Card>
               </div>
             ) : (
               kid?.map((k) => (
-                <div style={{ margin: "20px 0 0 100px" }}>
-                  <Comment item={k} />
+                <div style={clickSize>20? { margin: "10px 0 0 0" } :{ margin: "10px 0 0 20px" }}>
+                  <Comment item={k} level={clickSize+1}/>
                 </div>
               ))
             ))}

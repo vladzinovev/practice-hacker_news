@@ -26,6 +26,7 @@ export interface IComment {
 
 export interface AllComment {
   item: IComment;
+  level:number;
 }
 
 export interface IUser {

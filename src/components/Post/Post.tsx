@@ -43,7 +43,7 @@ const Post = () => {
 
   async function fetchComments() {
     setComments([]);
-    postItem?.kids?.map(c =>
+    postItem?.kids?.map((c) =>
       axios.get(`${itemUrl}${c}.json`).then(async (response) => {
         await setComments((pos) => [...pos, response.data]);
       })
@@ -95,24 +95,24 @@ const Post = () => {
             </Stack>
 
             <div className="infouser">
-              <p className="username">
+              <div className="username">
                 <NavLink
                   style={{ color: "#1976d2" }}
                   to={`/users/${postItem?.by}`}
                 >
                   {postItem?.by}
                 </NavLink>
-              </p>
-              <p className="date">{converterDate(postItem?.time)}</p>
+              </div>
+              <div className="date">{converterDate(postItem?.time)}</div>
             </div>
           </div>
           <Typography variant="h5">{postItem?.title}</Typography>
         </CardContent>
 
-        <CardActions>
+        <CardActions className="links">
           <Button size="medium">
-            <Link href={postItem?.url}>
-              {postItem?.url ? <p>URL</p> : <p>NO URL</p>}
+            <Link href={postItem?.url}> 
+                {postItem?.url ? <p>URL to the news</p> : <p>NO URL to the news</p>}
             </Link>
           </Button>
           <Button size="medium" onClick={showComment}>
@@ -131,9 +131,9 @@ const Post = () => {
             <div className="textcomment">There are no comments</div>
           </Card>
         ) : (
-          comments.map(comment => (
+          comments.map((comment) => (
             <div className="block1">
-              <Comment item={comment} />
+              <Comment item={comment} level={1}/>
             </div>
           ))
         ))}

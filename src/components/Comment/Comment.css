@@ -5,13 +5,13 @@
 }
 
 
-.comments .comment {
-  margin-top: 10px;
-}
 .comments .comment .flex {
-  margin-top: 20px;
+  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
+}
+.comments .comment .ctext {
+  text-align: left;
 }
 
 .loading {
