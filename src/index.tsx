@@ -1,18 +1,16 @@
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import StoreComponent from './store/store';
-import { BrowserRouter } from 'react-router-dom';
-
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import StoreComponent from "./store/store";
+import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 root.render(
-    <StoreComponent>
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
-        <App />
-      </BrowserRouter>
-    </StoreComponent>
+  <StoreComponent>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <App />
+    </BrowserRouter>
+  </StoreComponent>
 );
-
