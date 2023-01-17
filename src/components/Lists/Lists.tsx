@@ -25,7 +25,9 @@ const Lists = () => {
   const handleChange = () => {
     setChecked(!checked);
     setLoading(true);
-    checked ? setUrl(`${process.env.REACT_APP_BEST_URL}`) : setUrl(`${process.env.REACT_APP_NEWS_URL}`);
+    checked
+      ? setUrl(`${process.env.REACT_APP_BEST_URL}`)
+      : setUrl(`${process.env.REACT_APP_NEWS_URL}`);
   };
 
   async function fetchPosts(click: number) {
@@ -35,9 +37,11 @@ const Lists = () => {
 
     const ids = idPost.slice(min, max);
     await ids.map(async (id: INewsItemType) => {
-      await axios.get(`${process.env.REACT_APP_ITEM_URL}${id}.json`).then((response) => {
-        setPosts((pos) => [...pos, response.data]);
-      });
+      await axios
+        .get(`${process.env.REACT_APP_ITEM_URL}${id}.json`)
+        .then((response) => {
+          setPosts((pos) => [...pos, response.data]);
+        });
     });
     /* await idPost.map(async (m: number,len)=>{
             if(len>min && len<max){

@@ -1,3 +1,4 @@
+@import '../../variables';
 .user{
   .navigation {
     display: flex;
@@ -40,7 +41,7 @@
   .nocomment {
     margin-top: 20px;
     font-size: 1.175rem;
-    border: 1px solid rgba(25, 118, 210, 0.5);
+    border: 1px solid $main-border;
     height: 50px;
     .textcomment {
       margin-top: 12px;

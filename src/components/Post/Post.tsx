@@ -95,8 +95,7 @@ const Post = () => {
 
             <div className={styles.infouser}>
               <div className={styles.username}>
-                <NavLink
-                  style={{ color: "#1976d2" }}
+                <NavLink className={styles.link}
                   to={`/users/${postItem?.by}`}
                 >
                   {postItem?.by}

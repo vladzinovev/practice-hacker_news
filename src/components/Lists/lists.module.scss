@@ -16,7 +16,7 @@
     }
   }
   .switch {
-    border: 1px solid rgba(25, 118, 210, 0.5);
+    border: 1px solid $main-border;
     padding: 0 10px 0 10px;
     border-radius: 4px;
     display: flex;
@@ -26,12 +26,12 @@
       font-family: "Roboto", "Helvetica", "Arial", sans-serif;
       font-size: 0.875rem;
       margin-top: 10px;
-      color: #1976d2;
+      color: $main-link;
     }
   }
   .news {
     margin-top: 20px;
-    border: 1px solid rgba(25, 118, 210, 0.5);
+    border: 1px solid $main-border;
     .text {
       font-weight: 600;
       font-size: 1.075rem;

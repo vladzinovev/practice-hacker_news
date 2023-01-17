@@ -1,3 +1,4 @@
+@import '../../variables';
 .post {
   .navigation {
     display: flex;
@@ -13,7 +14,7 @@
       min-width: 64px;
     }
     .button {
-      color: #1976d2;
+      color: $main-link;
     }
   }
   .card {
@@ -28,6 +29,9 @@
         .username {
           font-size: 1.175rem;
           float: left;
+          .link{
+            color:$main-link;
+          }
         }
         .date {
           line-height: 1.75;
@@ -44,7 +48,7 @@
   .nocomment {
     margin-top: 20px;
     font-size: 1.175rem;
-    border: 1px solid rgba(25, 118, 210, 0.5);
+    border: 1px solid $main-border;
     height: 50px;
     .textcomment {
       margin-top: 12px;
