@@ -17,7 +17,6 @@ import "./Post.css";
 import logo from "../../image/logo.png";
 import { converterDate } from "../../utils/converter";
 import Comment from "../Comment/comment";
-import { itemUrl } from "../../variables/variables";
 
 const Post = () => {
   const { loading, setLoading } = useContext(StoreContext);
@@ -28,7 +27,7 @@ const Post = () => {
   const [show, setShow] = useState(false);
 
   async function fetchPost() {
-    await axios.get(`${itemUrl}${params.id}.json`).then(async (response) => {
+    await axios.get(`${process.env.REACT_APP_ITEM_URL}${params.id}.json`).then(async (response) => {
       await setPostItem(response.data);
     });
   }
@@ -44,7 +43,7 @@ const Post = () => {
   async function fetchComments() {
     setComments([]);
     postItem?.kids?.map((c) =>
-      axios.get(`${itemUrl}${c}.json`).then(async (response) => {
+      axios.get(`${process.env.REACT_APP_ITEM_URL}${c}.json`).then(async (response) => {
         await setComments((pos) => [...pos, response.data]);
       })
     );

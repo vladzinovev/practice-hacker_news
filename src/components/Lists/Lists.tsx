@@ -13,7 +13,6 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../../store/store";
 import "./lists.css";
-import { bestURL, itemUrl, newsURL } from "../../variables/variables";
 import ListItem from "./ListItem";
 import { INewsItemType } from "../../utils/types";
 
@@ -26,7 +25,7 @@ const Lists = () => {
   const handleChange = () => {
     setChecked(!checked);
     setLoading(true);
-    checked ? setUrl(bestURL) : setUrl(newsURL);
+    checked ? setUrl(`${process.env.REACT_APP_BEST_URL}`) : setUrl(`${process.env.REACT_APP_NEWS_URL}`);
   };
 
   async function fetchPosts(click: number) {
@@ -35,8 +34,8 @@ const Lists = () => {
     setPosts([]);
 
     const ids = idPost.slice(min, max);
-    await ids.map(async (id: number) => {
-      await axios.get(`${itemUrl}${id}.json`).then((response) => {
+    await ids.map(async (id: INewsItemType) => {
+      await axios.get(`${process.env.REACT_APP_ITEM_URL}${id}.json`).then((response) => {
         setPosts((pos) => [...pos, response.data]);
       });
     });
@@ -73,12 +72,7 @@ const Lists = () => {
           <div>New Posts</div>
         </div>
         <p>Hacker News</p>
-        <Button
-          variant="outlined"
-          onClick={() => {
-            refreshPage();
-          }}
-        >
+        <Button variant="outlined" onClick={refreshPage}>
           refresh page
         </Button>
       </div>
@@ -104,7 +98,7 @@ const Lists = () => {
             {loading ? (
               <div>Loading...</div>
             ) : (
-              posts.map((post, i) => <ListItem item={post} />)
+              posts.map((post) => <ListItem item={post} />)
             )}
           </TableBody>
         </Table>

@@ -5,7 +5,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import logo from "../../image/logo.png";
 import { converterDate } from "../../utils/converter";
 import { IUser } from "../../utils/types";
-import { userUrl } from "../../variables/variables";
 import "./User.css";
 
 const User = () => {
@@ -14,7 +13,7 @@ const User = () => {
   const [user, setUser] = useState<IUser>();
 
   async function fetchUser() {
-    await axios.get(`${userUrl}${params.by}.json`).then(async (response) => {
+    await axios.get(`${process.env.REACT_APP_USER_URL}${params.by}.json`).then(async (response) => {
       await setUser(response.data);
       console.log(response.data);
     });
@@ -39,12 +38,7 @@ const User = () => {
           go back
         </Button>
         <p>Hacker News</p>
-        <Button
-          variant="outlined"
-          onClick={() => {
-            refreshPage();
-          }}
-        >
+        <Button variant="outlined" onClick={refreshPage}>
           refresh page
         </Button>
       </div>

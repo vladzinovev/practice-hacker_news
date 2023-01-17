@@ -1,36 +1,37 @@
 import axios from "axios";
 import {
   createContext,
+  Dispatch,
   ReactNode,
   SetStateAction,
   useEffect,
   useState,
 } from "react";
-import { newsURL } from "../variables/variables";
+import { INewsItemType } from "../utils/types";
 
 interface IStoreContext {
-  idPost: any[];
+  idPost: INewsItemType[];
   url: string;
-  setUrl: any;
+  setUrl: Dispatch<SetStateAction<string>>;
   loading: boolean;
-  setLoading: any;
+  setLoading: Dispatch<SetStateAction<boolean>>;
   checked: boolean;
-  setChecked: any;
+  setChecked: Dispatch<SetStateAction<boolean>>;
 }
 
 export const StoreContext = createContext<IStoreContext>({
   idPost: [],
   url: "",
-  setUrl: undefined,
+  setUrl: () => {},
   loading: false,
-  setLoading: undefined,
+  setLoading: () => {},
   checked: true,
-  setChecked: undefined,
+  setChecked: () => {},
 });
 
 const StoreComponent = ({ children }: { children: ReactNode }) => {
   const [idPost, setIdPost] = useState<any[]>([]);
-  const [url, setUrl] = useState<string>(newsURL);
+  const [url, setUrl] = useState<string>(`${process.env.REACT_APP_NEWS_URL}`);
   const [loading, setLoading] = useState(false);
   const [checked, setChecked] = useState(true);
 

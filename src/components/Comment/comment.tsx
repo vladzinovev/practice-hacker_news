@@ -6,7 +6,6 @@ import "./Comment.css";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { StoreContext } from "../../store/store";
-import { itemUrl } from "../../variables/variables";
 
 const Comment = ({ item,level=1 }: AllComment) => {
   const [clickSize, setClickSize]=useState<number>(level);
@@ -18,7 +17,7 @@ const Comment = ({ item,level=1 }: AllComment) => {
     setKid([]);
 
     item.kids?.map((c) =>
-      axios.get(`${itemUrl}${c}.json`).then(async (response) => {
+      axios.get(`${process.env.REACT_APP_ITEM_URL}${c}.json`).then(async (response) => {
         await setKid((pos) => [...pos, response.data]);
       })
     );

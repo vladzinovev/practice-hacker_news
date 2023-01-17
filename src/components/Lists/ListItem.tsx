@@ -3,7 +3,7 @@ import { converterDate } from "../../utils/converter";
 import { NavLink } from "react-router-dom";
 import { AllItems } from "../../utils/types";
 
-const ListItem = ({ item }: AllItems, i: number) => {
+const ListItem = ({ item }: AllItems) => {
   return (
     <TableRow
       key={item.id}
@@ -25,4 +25,5 @@ const ListItem = ({ item }: AllItems, i: number) => {
     </TableRow>
   );
 };
+
 export default ListItem;
