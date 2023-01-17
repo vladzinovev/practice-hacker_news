@@ -35,6 +35,7 @@ const StoreComponent = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(false);
   const [checked, setChecked] = useState(true);
 
+
   async function fetchIdPost(url: string) {
     await axios.get(url).then((response) => {
       setIdPost(response.data);
