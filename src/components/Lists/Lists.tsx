@@ -12,7 +12,7 @@ import {
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../../store/store";
-import "./lists.css";
+import styles from "./lists.module.scss";
 import ListItem from "./ListItem";
 import { INewsItemType } from "../../utils/types";
 
@@ -60,9 +60,9 @@ const Lists = () => {
   }, [idPost, click]);
 
   return (
-    <section className="lists">
-      <div className="navigation">
-        <div className="switch">
+    <section className={styles.lists}>
+      <div className={styles.navigation}>
+        <div className={styles.switch}>
           <div>Bests Posts</div>
           <Switch
             checked={checked}
@@ -77,18 +77,18 @@ const Lists = () => {
         </Button>
       </div>
 
-      <TableContainer className="news" component={Paper}>
+      <TableContainer className={styles.news} component={Paper}>
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <TableCell className="text">Name title</TableCell>
-              <TableCell className="text" align="right">
+              <TableCell className={styles.text}>Name title</TableCell>
+              <TableCell className={styles.text} align="right">
                 Username
               </TableCell>
-              <TableCell className="text" align="right">
+              <TableCell className={styles.text} align="right">
                 Rating
               </TableCell>
-              <TableCell className="text" align="right">
+              <TableCell className={styles.text} align="right">
                 Date
               </TableCell>
             </TableRow>
@@ -104,9 +104,9 @@ const Lists = () => {
         </Table>
       </TableContainer>
 
-      <div className="footer">
+      <div className={styles.footer}>
         <Button
-          className="footerbutton"
+          className={styles.footerbutton}
           disabled={click === 1 ? true : false}
           variant="outlined"
           onClick={() => {
@@ -117,7 +117,7 @@ const Lists = () => {
         </Button>
         <div>Design by Vlad</div>
         <Button
-          className="footerbutton"
+          className={styles.footerbutton}
           disabled={posts.length < 20 ? true : false}
           variant="outlined"
           onClick={() => {

@@ -2,6 +2,7 @@ import { TableCell, TableRow } from "@mui/material";
 import { converterDate } from "../../utils/converter";
 import { NavLink } from "react-router-dom";
 import { AllItems } from "../../utils/types";
+import styles from "./lists.module.scss";
 
 const ListItem = ({ item }: AllItems) => {
   return (
@@ -10,12 +11,12 @@ const ListItem = ({ item }: AllItems) => {
       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
     >
       <TableCell component="th" scope="row">
-        <NavLink style={{ color: "#1976d2" }} to={`/post/${item.id}`}>
+        <NavLink className={styles.link} to={`/post/${item.id}`}>
           {item.title}
         </NavLink>
       </TableCell>
       <TableCell align="right">
-        <NavLink style={{ color: "#1976d2" }} to={`/users/${item.by}`}>
+        <NavLink className={styles.link} to={`/users/${item.by}`}>
           {item.by}
         </NavLink>
       </TableCell>

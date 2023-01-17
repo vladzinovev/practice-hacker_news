@@ -13,7 +13,7 @@ import { useContext, useEffect, useState } from "react";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { StoreContext } from "../../store/store";
 import { IComment, INewsItemType } from "../../utils/types";
-import "./Post.css";
+import styles from "./Post.module.scss";
 import logo from "../../image/logo.png";
 import { converterDate } from "../../utils/converter";
 import Comment from "../Comment/comment";
@@ -66,9 +66,9 @@ const Post = () => {
   }, [show]);
 
   return (
-    <section className="post">
-      <div className="navigation">
-        <Button variant="outlined" className="button" onClick={goBack}>
+    <section className={styles.post}>
+      <div className={styles.navigation}>
+        <Button variant="outlined" className={styles.button} onClick={goBack}>
           go back
         </Button>
         <p>Hacker News</p>
@@ -82,9 +82,9 @@ const Post = () => {
         </Button>
       </div>
 
-      <Card className="card">
+      <Card className={styles.card}>
         <CardContent>
-          <div className="flex">
+          <div className={styles.flex}>
             <Stack direction="row" spacing={2}>
               <Avatar
                 alt="Hacker News"
@@ -93,8 +93,8 @@ const Post = () => {
               />
             </Stack>
 
-            <div className="infouser">
-              <div className="username">
+            <div className={styles.infouser}>
+              <div className={styles.username}>
                 <NavLink
                   style={{ color: "#1976d2" }}
                   to={`/users/${postItem?.by}`}
@@ -102,13 +102,13 @@ const Post = () => {
                   {postItem?.by}
                 </NavLink>
               </div>
-              <div className="date">{converterDate(postItem?.time)}</div>
+              <div className={styles.date}>{converterDate(postItem?.time)}</div>
             </div>
           </div>
           <Typography variant="h5">{postItem?.title}</Typography>
         </CardContent>
 
-        <CardActions className="links">
+        <CardActions className={styles.links}>
           <Button size="medium">
             <Link href={postItem?.url}> 
                 {postItem?.url ? <p>URL to the news</p> : <p>NO URL to the news</p>}
@@ -122,16 +122,16 @@ const Post = () => {
 
       {show &&
         (loading ? (
-          <Card className="block1">
-            <div className="textcomment">Loading...</div>
+          <Card className={styles.block1}>
+            <div className={styles.textcomment}>Loading...</div>
           </Card>
         ) : !postItem?.kids ? (
-          <Card className="nocomment">
-            <div className="textcomment">There are no comments</div>
+          <Card className={styles.nocomment}>
+            <div className={styles.textcomment}>There are no comments</div>
           </Card>
         ) : (
           comments.map((comment) => (
-            <div className="block1">
+            <div className={styles.block1}>
               <Comment item={comment} level={1}/>
             </div>
           ))

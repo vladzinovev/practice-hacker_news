@@ -42,7 +42,7 @@ Project: [hacker-news](https://vladzinovev.github.io/practice-hacker_news/).
 
 ```
 React
-Redux
 TypeScript
 Axios
+Scss
 ```

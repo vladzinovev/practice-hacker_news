@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import logo from "../../image/logo.png";
 import { converterDate } from "../../utils/converter";
 import { IUser } from "../../utils/types";
-import "./User.css";
+import styles from "./User.module.scss";
 
 const User = () => {
   let params = useParams();
@@ -32,8 +32,8 @@ const User = () => {
   }, [params.by]);
 
   return (
-    <section className="user">
-      <div className="navigation">
+    <section className={styles.user}>
+      <div className={styles.navigation}>
         <Button variant="outlined" onClick={goBack}>
           go back
         </Button>
@@ -43,9 +43,9 @@ const User = () => {
         </Button>
       </div>
 
-      <Card className="card">
+      <Card className={styles.card}>
         <CardContent>
-          <div className="flex">
+          <div className={styles.flex}>
             <Stack direction="row" spacing={2}>
               <Avatar
                 alt="Hacker News"
@@ -54,11 +54,11 @@ const User = () => {
               />
             </Stack>
 
-            <div className="infouser">
-              <p className="username">{params.by}</p>
+            <div className={styles.infouser}>
+              <p className={styles.username}>{params.by}</p>
             </div>
           </div>
-          <div className="aboutuser">
+          <div className={styles.aboutuser}>
             <p>
               Creation date of the user, in Unix Time:{" "}
               {converterDate(user?.created)}

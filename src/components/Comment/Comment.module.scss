@@ -1,0 +1,39 @@
+@import '../../variables';
+.comment{
+  .loading {
+    margin-top: 20px;
+    font-size: 1.175rem;
+    border: 1px solid $main-border;
+    height: 50px;
+  }
+  .comments {
+    padding: 10px;
+    border: 1px solid $main-border;
+    margin: 10px 0 0 20px;
+  }
+  
+  .ccomment{
+    .flex {
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      .link{
+        color:$main-link;
+      } 
+    }
+    .ctext {
+      text-align: left;
+    }
+  } 
+  .no_margin{
+    margin: 10px 0 0 0;
+  }
+  .margin{
+    margin: 10px 0 0 20px;
+  }
+
+}
+
+
+
+

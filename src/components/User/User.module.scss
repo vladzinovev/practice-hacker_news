@@ -1,0 +1,49 @@
+.user{
+  .navigation {
+    display: flex;
+    justify-content: space-between;
+    p {
+      margin-top: 12px;
+      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+      font-weight: 500;
+      font-size: 1.475rem;
+      line-height: 0.75;
+      letter-spacing: 0.02857em;
+      text-transform: uppercase;
+      min-width: 64px;
+    }
+  }
+  .card {
+    margin-top: 20px;
+    .flex {
+      display: flex;
+      .infouser {
+        margin-left: 10px;
+        .username {
+          margin-top: 5px;
+          margin-left: 10px;
+          font-size: 1.575rem;
+        }
+      }
+    }
+    .aboutuser {
+      margin-top: 15px;
+      text-align: left;
+      p {
+        margin-top: 5px;
+      }
+      div {
+        margin-top: 5px;
+      }
+    }
+  }
+  .nocomment {
+    margin-top: 20px;
+    font-size: 1.175rem;
+    border: 1px solid rgba(25, 118, 210, 0.5);
+    height: 50px;
+    .textcomment {
+      margin-top: 12px;
+    }
+  }
+} 

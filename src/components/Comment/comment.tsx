@@ -2,13 +2,13 @@ import { Card, Button } from "@mui/material";
 import { converterDate } from "../../utils/converter";
 import { NavLink } from "react-router-dom";
 import { AllComment, IComment } from "../../utils/types";
-import "./Comment.css";
+import styles from "./Comment.module.scss";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { StoreContext } from "../../store/store";
 
-const Comment = ({ item,level=1 }: AllComment) => {
-  const [clickSize, setClickSize]=useState<number>(level);
+const Comment = ({ item, level = 1 }: AllComment) => {
+  const [clickSize, setClickSize] = useState<number>(level);
   const [kid, setKid] = useState<IComment[]>([]);
   const { loading, setLoading } = useContext(StoreContext);
   const [show, setShow] = useState(false);
@@ -17,17 +17,20 @@ const Comment = ({ item,level=1 }: AllComment) => {
     setKid([]);
 
     item.kids?.map((c) =>
-      axios.get(`${process.env.REACT_APP_ITEM_URL}${c}.json`).then(async (response) => {
-        await setKid((pos) => [...pos, response.data]);
-      })
+      axios
+        .get(`${process.env.REACT_APP_ITEM_URL}${c}.json`)
+        .then(async (response) => {
+          await setKid((pos) => [...pos, response.data]);
+        })
     );
   }
 
   const showComment = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    setClickSize(clickSize+1);
-    console.log(clickSize)
     setShow((prevShow) => !prevShow);
+    console.log(clickSize);
+    !show ? setClickSize(clickSize + 1) : setClickSize(clickSize - 1);
+    console.log(clickSize);
   };
 
   useEffect(() => {
@@ -37,30 +40,27 @@ const Comment = ({ item,level=1 }: AllComment) => {
   }, []);
 
   return (
-    <div>
+    <section className={styles.comment}>
       {loading ? (
-        <div style={{ margin: "20px 0 0 100px" }}>
-          <Card className="loading">
-            <div className="textcomment">Loading</div>
+        <div>
+          <Card className={styles.loading}>
+            <div className={styles.textcomment}>Loading</div>
           </Card>
         </div>
       ) : (
         <div>
-          <Card className="comments" style={{ margin: "10px 0 0 20px" }}>
-            <div className="comment">
-              <div className="flex">
-                <p className="cusername">
-                  <NavLink
-                    style={{ color: "#1976d2" }}
-                    to={`/users/${item.by}`}
-                  >
+          <Card className={styles.comments}>
+            <div className={styles.ccomment}>
+              <div className={styles.flex}>
+                <p className={styles.cusername}>
+                  <NavLink className={styles.link} to={`/users/${item.by}`}>
                     {item.by}
                   </NavLink>
                 </p>
-                <p className="cdate">{converterDate(item.time)}</p>
+                <p className={styles.cdate}>{converterDate(item.time)}</p>
               </div>
               <div
-                className="ctext"
+                className={styles.ctext}
                 dangerouslySetInnerHTML={{ __html: item.text }}
               ></div>
             </div>
@@ -74,21 +74,23 @@ const Comment = ({ item,level=1 }: AllComment) => {
 
           {show &&
             (loading ? (
-              <div style={{ margin: "20px 0 0 40px" }}>
-                <Card className="loading">
-                  <div className="textcomment">Loading</div>
+              <div>
+                <Card className={styles.loading}>
+                  <div className={styles.textcomment}>Loading</div>
                 </Card>
               </div>
             ) : (
               kid?.map((k) => (
-                <div style={clickSize>20? { margin: "10px 0 0 0" } :{ margin: "10px 0 0 20px" }}>
-                  <Comment item={k} level={clickSize+1}/>
+                <div
+                  className={clickSize > 20 ? styles.no_margin : styles.margin}
+                >
+                  <Comment item={k} level={clickSize} />
                 </div>
               ))
             ))}
         </div>
       )}
-    </div>
+    </section>
   );
 };
 export default Comment;
