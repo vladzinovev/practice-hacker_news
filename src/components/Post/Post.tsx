@@ -18,6 +18,8 @@ import logo from "../../image/logo.png";
 import { converterDate } from "../../utils/converter";
 import Comment from "../Comment/comment";
 
+import { fetchPost } from "../../utils/fetch";
+
 const Post = () => {
   const { loading, setLoading } = useContext(StoreContext);
   let params = useParams();
@@ -26,11 +28,12 @@ const Post = () => {
   const [comments, setComments] = useState<IComment[]>([]);
   const [show, setShow] = useState(false);
 
-  async function fetchPost() {
+/*   fetchPost(`${process.env.REACT_APP_ITEM_URL}${params.id}.json`,setPostItem) 
+    async function fetchPost() {
     await axios.get(`${process.env.REACT_APP_ITEM_URL}${params.id}.json`).then(async (response) => {
       await setPostItem(response.data);
     });
-  }
+  } */
 
   const goBack = () => {
     navigate(-1);
@@ -55,7 +58,7 @@ const Post = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetchPost();
+    fetchPost(`${process.env.REACT_APP_ITEM_URL}${params.id}.json`,setPostItem);
     setLoading(false);
   }, [params.id]);
 

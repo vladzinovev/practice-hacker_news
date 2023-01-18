@@ -7,17 +7,13 @@ import { converterDate } from "../../utils/converter";
 import { IUser } from "../../utils/types";
 import styles from "./User.module.scss";
 
+import { fetchPost } from "../../utils/fetch";
+
 const User = () => {
   let params = useParams();
   let navigate = useNavigate();
   const [user, setUser] = useState<IUser>();
 
-  async function fetchUser() {
-    await axios.get(`${process.env.REACT_APP_USER_URL}${params.by}.json`).then(async (response) => {
-      await setUser(response.data);
-      console.log(response.data);
-    });
-  }
 
   const goBack = () => {
     navigate(-1);
@@ -28,7 +24,7 @@ const User = () => {
   };
 
   useEffect(() => {
-    fetchUser();
+    fetchPost(`${process.env.REACT_APP_USER_URL}${params.by}.json`, setUser);
   }, [params.by]);
 
   return (

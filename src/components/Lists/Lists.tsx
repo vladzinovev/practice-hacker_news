@@ -15,10 +15,19 @@ import { StoreContext } from "../../store/store";
 import styles from "./lists.module.scss";
 import ListItem from "./ListItem";
 import { INewsItemType } from "../../utils/types";
+import { fetchPost } from "../../utils/fetch";
+import { clearInterval } from "timers";
 
 const Lists = () => {
-  const { idPost, setUrl, loading, setLoading, checked, setChecked } =
-    useContext(StoreContext);
+  const {
+    idPost,
+    setUrl,
+    loading,
+    setLoading,
+    checked,
+    setChecked,
+    setTimerOff,
+  } = useContext(StoreContext);
   const [posts, setPosts] = useState<INewsItemType[]>([]);
   const [click, setClick] = useState<number>(1);
 
@@ -59,6 +68,7 @@ const Lists = () => {
   };
 
   useEffect(() => {
+    console.log("упешно");
     fetchPosts(click);
     setLoading(false);
   }, [idPost, click]);
@@ -115,6 +125,7 @@ const Lists = () => {
           variant="outlined"
           onClick={() => {
             setClick(click - 1);
+            setTimerOff(false);
           }}
         >
           previous Page
@@ -126,6 +137,7 @@ const Lists = () => {
           variant="outlined"
           onClick={() => {
             setClick(click + 1);
+            setTimerOff(false);
           }}
         >
           next Page
