@@ -20,7 +20,11 @@ interface IStoreContext {
   setLoading: Dispatch<SetStateAction<boolean>>;
   checked: boolean;
   setChecked: Dispatch<SetStateAction<boolean>>;
-  setTimerOff:Dispatch<SetStateAction<boolean>>;
+  setTimerOn: Dispatch<SetStateAction<boolean>>;
+  error: boolean;
+  setError: Dispatch<SetStateAction<boolean>>;
+  errorMessage: string;
+  setErrorMessage: Dispatch<SetStateAction<string>>;
 }
 
 export const StoreContext = createContext<IStoreContext>({
@@ -32,7 +36,11 @@ export const StoreContext = createContext<IStoreContext>({
   setLoading: () => {},
   checked: true,
   setChecked: () => {},
-  setTimerOff:() => {},
+  setTimerOn: () => {},
+  error: false,
+  setError: () => {},
+  errorMessage: "",
+  setErrorMessage: () => {},
 });
 
 const StoreComponent = ({ children }: { children: ReactNode }) => {
@@ -40,29 +48,29 @@ const StoreComponent = ({ children }: { children: ReactNode }) => {
   const [url, setUrl] = useState<string>(`${process.env.REACT_APP_NEWS_URL}`);
   const [loading, setLoading] = useState(false);
   const [checked, setChecked] = useState(true);
-  const [timerOff, setTimerOff] = useState(true);
-  const timer=useRef<NodeJS.Timeout>();;
-
+  const [timerOn, setTimerOn] = useState(true);
+  const timer = useRef<NodeJS.Timeout>();
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     setLoading(true);
-    fetchPost(url, setIdPost);
-    timer.current = setInterval(() => {
-        fetchPost(url, setIdPost);
-      }, 6000);
+    fetchPost(url, setIdPost, setError, setErrorMessage);
+    if (timerOn) {
+      timer.current = setInterval(() => {
+        fetchPost(url, setIdPost, setError, setErrorMessage);
+      }, 60000);
+      console.log("timeron");
+    } else {
+      clearInterval(timer.current);
+      console.log("timeroff");
+    }
+    setLoading(false);
     return () => {
       clearInterval(timer.current);
     };
-  }, [url]);
-
-  useEffect(() => {
-    if(!timerOff){
-        clearInterval(timer.current);
-        console.log('timeroff');
-    }
-    console.log('timer');
     
-  }, [timerOff]);
+  }, [url, timerOn]);
 
   if (!idPost) return null;
 
@@ -77,7 +85,11 @@ const StoreComponent = ({ children }: { children: ReactNode }) => {
         setLoading,
         checked,
         setChecked,
-        setTimerOff
+        setTimerOn,
+        error,
+        setError,
+        errorMessage,
+        setErrorMessage,
       }}
     >
       {children}

@@ -19,21 +19,18 @@ import { converterDate } from "../../utils/converter";
 import Comment from "../Comment/comment";
 
 import { fetchPost } from "../../utils/fetch";
+import Error from "../Error/Error";
 
 const Post = () => {
-  const { loading, setLoading } = useContext(StoreContext);
+  const { loading, setLoading} =
+    useContext(StoreContext);
   let params = useParams();
   let navigate = useNavigate();
   const [postItem, setPostItem] = useState<INewsItemType>();
   const [comments, setComments] = useState<IComment[]>([]);
   const [show, setShow] = useState(false);
-
-/*   fetchPost(`${process.env.REACT_APP_ITEM_URL}${params.id}.json`,setPostItem) 
-    async function fetchPost() {
-    await axios.get(`${process.env.REACT_APP_ITEM_URL}${params.id}.json`).then(async (response) => {
-      await setPostItem(response.data);
-    });
-  } */
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const goBack = () => {
     navigate(-1);
@@ -46,9 +43,15 @@ const Post = () => {
   async function fetchComments() {
     setComments([]);
     postItem?.kids?.map((c) =>
-      axios.get(`${process.env.REACT_APP_ITEM_URL}${c}.json`).then(async (response) => {
-        await setComments((pos) => [...pos, response.data]);
-      })
+      axios
+        .get(`${process.env.REACT_APP_ITEM_URL}${c}.json`)
+        .then(async (response) => {
+          await setComments((pos) => [...pos, response.data]);
+        })
+        .catch((error) => {
+          setError(true);
+          setErrorMessage(error.message);
+        })
     );
   }
 
@@ -58,7 +61,12 @@ const Post = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetchPost(`${process.env.REACT_APP_ITEM_URL}${params.id}.json`,setPostItem);
+    fetchPost(
+      `${process.env.REACT_APP_ITEM_URL}${params.id}.json`,
+      setPostItem,
+      setError,
+      setErrorMessage
+    );
     setLoading(false);
   }, [params.id]);
 
@@ -85,42 +93,55 @@ const Post = () => {
         </Button>
       </div>
 
-      <Card className={styles.card}>
-        <CardContent>
-          <div className={styles.flex}>
-            <Stack direction="row" spacing={2}>
-              <Avatar
-                alt="Hacker News"
-                src={logo}
-                sx={{ width: 40, height: 40 }}
-              />
-            </Stack>
+      {loading ? (
+        <div>Loading...</div>
+      ) : error ? (
+        <Error errorMessage={errorMessage} />
+      ) : (
+        <Card className={styles.card}>
+          <CardContent>
+            <div className={styles.flex}>
+              <Stack direction="row" spacing={2}>
+                <Avatar
+                  alt="Hacker News"
+                  src={logo}
+                  sx={{ width: 40, height: 40 }}
+                />
+              </Stack>
 
-            <div className={styles.infouser}>
-              <div className={styles.username}>
-                <NavLink className={styles.link}
-                  to={`/users/${postItem?.by}`}
-                >
-                  {postItem?.by}
-                </NavLink>
+              <div className={styles.infouser}>
+                <div className={styles.username}>
+                  <NavLink
+                    className={styles.link}
+                    to={`/users/${postItem?.by}`}
+                  >
+                    {postItem?.by}
+                  </NavLink>
+                </div>
+                <div className={styles.date}>
+                  {converterDate(postItem?.time)}
+                </div>
               </div>
-              <div className={styles.date}>{converterDate(postItem?.time)}</div>
             </div>
-          </div>
-          <Typography variant="h5">{postItem?.title}</Typography>
-        </CardContent>
+            <Typography variant="h5">{postItem?.title}</Typography>
+          </CardContent>
 
-        <CardActions className={styles.links}>
-          <Button size="medium">
-            <Link href={postItem?.url}> 
-                {postItem?.url ? <p>URL to the news</p> : <p>NO URL to the news</p>}
-            </Link>
-          </Button>
-          <Button size="medium" onClick={showComment}>
-            Comments :{postItem?.descendants}
-          </Button>
-        </CardActions>
-      </Card>
+          <CardActions className={styles.links}>
+            <Button size="medium">
+              <Link href={postItem?.url}>
+                {postItem?.url ? (
+                  <p>URL to the news</p>
+                ) : (
+                  <p>NO URL to the news</p>
+                )}
+              </Link>
+            </Button>
+            <Button size="medium" onClick={showComment}>
+              Comments :{postItem?.descendants}
+            </Button>
+          </CardActions>
+        </Card>
+      )}
 
       {show &&
         (loading ? (
@@ -131,10 +152,12 @@ const Post = () => {
           <Card className={styles.nocomment}>
             <div className={styles.textcomment}>There are no comments</div>
           </Card>
+        ) : error ? (
+          <Error errorMessage={errorMessage} />
         ) : (
           comments.map((comment) => (
             <div className={styles.block1}>
-              <Comment item={comment} level={1}/>
+              <Comment item={comment} level={1} />
             </div>
           ))
         ))}

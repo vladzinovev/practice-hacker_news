@@ -15,8 +15,7 @@ import { StoreContext } from "../../store/store";
 import styles from "./lists.module.scss";
 import ListItem from "./ListItem";
 import { INewsItemType } from "../../utils/types";
-import { fetchPost } from "../../utils/fetch";
-import { clearInterval } from "timers";
+import Error from "../Error/Error";
 
 const Lists = () => {
   const {
@@ -26,10 +25,12 @@ const Lists = () => {
     setLoading,
     checked,
     setChecked,
-    setTimerOff,
+    setTimerOn
   } = useContext(StoreContext);
   const [posts, setPosts] = useState<INewsItemType[]>([]);
   const [click, setClick] = useState<number>(1);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = () => {
     setChecked(!checked);
@@ -43,6 +44,9 @@ const Lists = () => {
     const max = 21 * click;
     const min = max - 21;
     setPosts([]);
+    if (click === 1) {
+      setTimerOn(true);
+    }
 
     const ids = idPost.slice(min, max);
     await ids.map(async (id: INewsItemType) => {
@@ -50,17 +54,12 @@ const Lists = () => {
         .get(`${process.env.REACT_APP_ITEM_URL}${id}.json`)
         .then((response) => {
           setPosts((pos) => [...pos, response.data]);
+        })
+        .catch((error) => {
+          setError(true);
+          setErrorMessage(error.message);
         });
     });
-    /* await idPost.map(async (m: number,len)=>{
-            if(len>min && len<max){
-                await axios.get(`${itemUrl}${m}.json`)
-                .then(async (response)=>{
-                    await setPosts(pos=>[...pos,response.data])
-                    
-                })
-            }
-        })  */
   }
 
   const refreshPage = () => {
@@ -111,7 +110,10 @@ const Lists = () => {
           <TableBody>
             {loading ? (
               <div>Loading...</div>
+            ) : error ? (
+              <Error errorMessage={errorMessage} />
             ) : (
+                
               posts.map((post) => <ListItem item={post} />)
             )}
           </TableBody>
@@ -125,7 +127,7 @@ const Lists = () => {
           variant="outlined"
           onClick={() => {
             setClick(click - 1);
-            setTimerOff(false);
+            setTimerOn(false);
           }}
         >
           previous Page
@@ -137,7 +139,7 @@ const Lists = () => {
           variant="outlined"
           onClick={() => {
             setClick(click + 1);
-            setTimerOff(false);
+            setTimerOn(false);
           }}
         >
           next Page

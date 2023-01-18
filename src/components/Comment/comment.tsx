@@ -6,12 +6,15 @@ import styles from "./Comment.module.scss";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { StoreContext } from "../../store/store";
+import Error from "../Error/Error";
 
 const Comment = ({ item, level = 1 }: AllComment) => {
   const [clickSize, setClickSize] = useState<number>(level);
   const [kid, setKid] = useState<IComment[]>([]);
-  const { loading, setLoading } = useContext(StoreContext);
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   async function fetchComments() {
     setKid([]);
@@ -21,6 +24,10 @@ const Comment = ({ item, level = 1 }: AllComment) => {
         .get(`${process.env.REACT_APP_ITEM_URL}${c}.json`)
         .then(async (response) => {
           await setKid((pos) => [...pos, response.data]);
+        })
+        .catch((error) => {
+          setError(true);
+          setErrorMessage(error.message);
         })
     );
   }
@@ -47,6 +54,8 @@ const Comment = ({ item, level = 1 }: AllComment) => {
             <div className={styles.textcomment}>Loading</div>
           </Card>
         </div>
+      ) : error ? (
+        <Error errorMessage={errorMessage}/>
       ) : (
         <div>
           <Card className={styles.comments}>
@@ -79,6 +88,8 @@ const Comment = ({ item, level = 1 }: AllComment) => {
                   <div className={styles.textcomment}>Loading</div>
                 </Card>
               </div>
+            ) : error ? (
+              <Error errorMessage={errorMessage}/>
             ) : (
               kid?.map((k) => (
                 <div
