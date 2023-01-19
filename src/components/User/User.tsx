@@ -12,8 +12,8 @@ import { StoreContext } from "../../store/store";
 import Error from "../Error/Error";
 
 const User = () => {
-  const { loading, setLoading} =
-    useContext(StoreContext);
+
+    const [loading, setLoading] = useState(false);
   let params = useParams();
   let navigate = useNavigate();
   const [user, setUser] = useState<IUser>();

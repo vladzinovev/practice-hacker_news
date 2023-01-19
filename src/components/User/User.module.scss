@@ -7,7 +7,7 @@
       margin-top: 12px;
       font-family: "Roboto", "Helvetica", "Arial", sans-serif;
       font-weight: 500;
-      font-size: 1.475rem;
+      font-size: 24px;
       line-height: 0.75;
       letter-spacing: 0.02857em;
       text-transform: uppercase;
@@ -23,7 +23,7 @@
         .username {
           margin-top: 5px;
           margin-left: 10px;
-          font-size: 1.575rem;
+          font-size: 25px;
         }
       }
     }
@@ -40,7 +40,7 @@
   }
   .nocomment {
     margin-top: 20px;
-    font-size: 1.175rem;
+    font-size: 19px;
     border: 1px solid $main-border;
     height: 50px;
     .textcomment {

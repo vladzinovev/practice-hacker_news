@@ -1,6 +1,7 @@
 import {
   Button,
   Paper,
+  Skeleton,
   Switch,
   Table,
   TableBody,
@@ -8,6 +9,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
@@ -18,19 +20,13 @@ import { INewsItemType } from "../../utils/types";
 import Error from "../Error/Error";
 
 const Lists = () => {
-  const {
-    idPost,
-    setUrl,
-    loading,
-    setLoading,
-    checked,
-    setChecked,
-    setTimerOn
-  } = useContext(StoreContext);
+  const { idPost, setUrl, checked, setChecked, setTimerOn,load,setLoad} =
+    useContext(StoreContext);
   const [posts, setPosts] = useState<INewsItemType[]>([]);
   const [click, setClick] = useState<number>(1);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = () => {
     setChecked(!checked);
@@ -41,13 +37,14 @@ const Lists = () => {
   };
 
   async function fetchPosts(click: number) {
+    setLoading(true);
     const max = 21 * click;
     const min = max - 21;
     setPosts([]);
     if (click === 1) {
       setTimerOn(true);
     }
-
+    setLoad(true);
     const ids = idPost.slice(min, max);
     await ids.map(async (id: INewsItemType) => {
       await axios
@@ -67,9 +64,12 @@ const Lists = () => {
   };
 
   useEffect(() => {
-    console.log("упешно");
+ 
+    console.log(loading);
     fetchPosts(click);
     setLoading(false);
+    console.log(loading);
+    setLoad(false);
   }, [idPost, click]);
 
   return (
@@ -108,12 +108,36 @@ const Lists = () => {
           </TableHead>
 
           <TableBody>
-            {loading ? (
-              <div>Loading...</div>
+            {load||loading ? (
+              
+                <TableRow
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    <Skeleton width="623px">
+                      <Typography>.</Typography>
+                    </Skeleton>
+                  </TableCell>
+                  <TableCell align="right">
+                    <Skeleton width="101px">
+                      <Typography>.</Typography>
+                    </Skeleton>
+                  </TableCell>
+
+                  <TableCell align="right">
+                    <Skeleton width="82px">
+                      <Typography>.</Typography>
+                    </Skeleton>
+                  </TableCell>
+                  <TableCell align="right">
+                    <Skeleton width="141px">
+                      <Typography>.</Typography>
+                    </Skeleton>
+                  </TableCell>
+                </TableRow>
             ) : error ? (
               <Error errorMessage={errorMessage} />
             ) : (
-                
               posts.map((post) => <ListItem item={post} />)
             )}
           </TableBody>

@@ -1,4 +1,4 @@
-import axios from "axios";
+
 import {
   createContext,
   Dispatch,
@@ -16,8 +16,8 @@ interface IStoreContext {
   setIdPost: Dispatch<SetStateAction<INewsItemType[]>>;
   url: string;
   setUrl: Dispatch<SetStateAction<string>>;
-  loading: boolean;
-  setLoading: Dispatch<SetStateAction<boolean>>;
+  load: boolean;
+  setLoad: Dispatch<SetStateAction<boolean>>;
   checked: boolean;
   setChecked: Dispatch<SetStateAction<boolean>>;
   setTimerOn: Dispatch<SetStateAction<boolean>>;
@@ -32,8 +32,8 @@ export const StoreContext = createContext<IStoreContext>({
   setIdPost: () => {},
   url: "",
   setUrl: () => {},
-  loading: false,
-  setLoading: () => {},
+  load: false,
+  setLoad: () => {},
   checked: true,
   setChecked: () => {},
   setTimerOn: () => {},
@@ -46,7 +46,7 @@ export const StoreContext = createContext<IStoreContext>({
 const StoreComponent = ({ children }: { children: ReactNode }) => {
   const [idPost, setIdPost] = useState<INewsItemType[]>([]);
   const [url, setUrl] = useState<string>(`${process.env.REACT_APP_NEWS_URL}`);
-  const [loading, setLoading] = useState(false);
+  const [load, setLoad] = useState(false);
   const [checked, setChecked] = useState(true);
   const [timerOn, setTimerOn] = useState(true);
   const timer = useRef<NodeJS.Timeout>();
@@ -54,21 +54,15 @@ const StoreComponent = ({ children }: { children: ReactNode }) => {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    setLoading(true);
+    setLoad(true);
     fetchPost(url, setIdPost, setError, setErrorMessage);
     if (timerOn) {
       timer.current = setInterval(() => {
         fetchPost(url, setIdPost, setError, setErrorMessage);
       }, 60000);
-      console.log("timeron");
     } else {
       clearInterval(timer.current);
-      console.log("timeroff");
     }
-    setLoading(false);
-    return () => {
-      clearInterval(timer.current);
-    };
     
   }, [url, timerOn]);
 
@@ -81,8 +75,8 @@ const StoreComponent = ({ children }: { children: ReactNode }) => {
         setIdPost,
         url,
         setUrl,
-        loading,
-        setLoading,
+        load,
+        setLoad,
         checked,
         setChecked,
         setTimerOn,

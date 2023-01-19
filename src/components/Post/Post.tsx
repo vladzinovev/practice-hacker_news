@@ -5,6 +5,7 @@ import {
   CardActions,
   CardContent,
   Link,
+  Skeleton,
   Stack,
   Typography,
 } from "@mui/material";
@@ -22,8 +23,8 @@ import { fetchPost } from "../../utils/fetch";
 import Error from "../Error/Error";
 
 const Post = () => {
-  const { loading, setLoading} =
-    useContext(StoreContext);
+  const [loading, setLoading] = useState(false);
+  const [load, setLoad] = useState(false);
   let params = useParams();
   let navigate = useNavigate();
   const [postItem, setPostItem] = useState<INewsItemType>();
@@ -57,9 +58,15 @@ const Post = () => {
 
   const showComment = () => {
     setShow(true);
+    setLoad(true);
+    /* localStorage.setItem("comment", JSON.stringify(true)); */
   };
 
   useEffect(() => {
+    /* const items = JSON.parse(localStorage.getItem("comment")|| '');
+    if (items) {
+        setShow(items);
+    }  */
     setLoading(true);
     fetchPost(
       `${process.env.REACT_APP_ITEM_URL}${params.id}.json`,
@@ -71,9 +78,15 @@ const Post = () => {
   }, [params.id]);
 
   useEffect(() => {
+    /* const items = JSON.parse(localStorage.getItem("comment")|| '');
+    if (items) {
+        setShow(items);
+    }  */
+    console.log(show);
     setLoading(true);
     fetchComments();
     setLoading(false);
+    setLoad(false);
   }, [show]);
 
   return (
@@ -94,7 +107,46 @@ const Post = () => {
       </div>
 
       {loading ? (
-        <div>Loading...</div>
+        <Card className={styles.card}>
+          <CardContent>
+            <div className={styles.flex}>
+              <Stack direction="row" spacing={2}>
+                <Skeleton variant="circular">
+                  <Avatar/>
+                </Skeleton>
+              </Stack>
+
+              <div className={styles.infouser}>
+                <div className={styles.username}>
+                  <Skeleton width="100px">
+                    <Typography className={styles.link}>.</Typography>
+                  </Skeleton>
+                </div>
+                <div className={styles.date}>
+                  <Skeleton width="100px">
+                    <Typography>.</Typography>
+                  </Skeleton>
+                </div>
+              </div>
+            </div>
+            <Skeleton width="100%">
+              <Typography variant="h5">.</Typography>
+            </Skeleton>
+          </CardContent>
+
+          <CardActions className={styles.links}>
+            <Button size="medium">
+              <Skeleton width="100px">
+                <Typography>.</Typography>
+              </Skeleton>
+            </Button>
+            <Button size="medium">
+              <Skeleton width="100px">
+                <Typography>.</Typography>
+              </Skeleton>
+            </Button>
+          </CardActions>
+        </Card>
       ) : error ? (
         <Error errorMessage={errorMessage} />
       ) : (
@@ -148,18 +200,18 @@ const Post = () => {
           <Card className={styles.block1}>
             <div className={styles.textcomment}>Loading...</div>
           </Card>
-        ) : !postItem?.kids ? (
-          <Card className={styles.nocomment}>
-            <div className={styles.textcomment}>There are no comments</div>
-          </Card>
         ) : error ? (
           <Error errorMessage={errorMessage} />
-        ) : (
+        ) : postItem?.kids ? (
           comments.map((comment) => (
             <div className={styles.block1}>
               <Comment item={comment} level={1} />
             </div>
           ))
+        ) : (
+          <Card className={styles.nocomment}>
+            <div className={styles.textcomment}>There are no comments</div>
+          </Card>
         ))}
     </section>
   );

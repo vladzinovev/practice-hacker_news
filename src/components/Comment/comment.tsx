@@ -3,9 +3,8 @@ import { converterDate } from "../../utils/converter";
 import { NavLink } from "react-router-dom";
 import { AllComment, IComment } from "../../utils/types";
 import styles from "./Comment.module.scss";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { StoreContext } from "../../store/store";
 import Error from "../Error/Error";
 
 const Comment = ({ item, level = 1 }: AllComment) => {
@@ -33,11 +32,13 @@ const Comment = ({ item, level = 1 }: AllComment) => {
   }
 
   const showComment = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    
+    
     e.preventDefault();
     setShow((prevShow) => !prevShow);
-    console.log(clickSize);
+    
     !show ? setClickSize(clickSize + 1) : setClickSize(clickSize - 1);
-    console.log(clickSize);
+    
   };
 
   useEffect(() => {
@@ -76,7 +77,7 @@ const Comment = ({ item, level = 1 }: AllComment) => {
           </Card>
 
           {kid.length > 0 && (
-            <Button size="medium" onClick={(e) => showComment(e)}>
+            <Button size="medium" onClick={(e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => showComment(e)}>
               View the answer
             </Button>
           )}
@@ -85,7 +86,7 @@ const Comment = ({ item, level = 1 }: AllComment) => {
             (loading ? (
               <div>
                 <Card className={styles.loading}>
-                  <div className={styles.textcomment}>Loading</div>
+                  <div className={styles.textcomment}>Loading...</div>
                 </Card>
               </div>
             ) : error ? (

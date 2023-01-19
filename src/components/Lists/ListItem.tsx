@@ -11,7 +11,10 @@ const ListItem = ({ item }: AllItems) => {
       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
     >
       <TableCell component="th" scope="row">
-        <NavLink className={styles.link} to={`/post/${item.id}`}>
+        <NavLink
+          className={styles.link}
+          to={`/post/${item.id}`}
+        >
           {item.title}
         </NavLink>
       </TableCell>
