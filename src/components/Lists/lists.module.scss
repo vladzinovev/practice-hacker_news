@@ -1,9 +1,10 @@
-@import '../../variables';
+@import "../../variables";
 .lists {
+  
   .navigation {
     display: flex;
     justify-content: space-between;
-    p {
+    .header {
       margin-right: 164px;
       margin-top: 12px;
       font-family: "Roboto", "Helvetica", "Arial", sans-serif;
@@ -32,7 +33,7 @@
   .news {
     margin-top: 20px;
     border: 1px solid $main-border;
-    .text {
+    .text, .text1 {
       font-weight: 600;
       font-size: 17px;
     }
@@ -42,8 +43,24 @@
     display: flex;
     justify-content: space-between;
   }
+  @media (max-width: 700px) {
+    .news {
+      width: 100%;
+      .text, .none {
+        display:none;
+      }
+    }
+    .navigation {
+      .header {
+        margin-right: 10px;
+        
+      }
+    }
+  }
+  @media (max-width: 500px) {
+    
+  }
 }
-.link{
-  color:$main-link;
+.link {
+  color: $main-link;
 }
-

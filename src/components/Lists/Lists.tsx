@@ -1,3 +1,5 @@
+import { useContext, useEffect, useState } from "react";
+import axios from "axios";
 import {
   Button,
   Paper,
@@ -11,16 +13,15 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+
 import { StoreContext } from "../../store/store";
-import styles from "./lists.module.scss";
 import ListItem from "./ListItem";
 import { INewsItemType } from "../../utils/types";
 import Error from "../Error/Error";
+import styles from "./lists.module.scss";
 
 const Lists = () => {
-  const { idPost, setUrl, checked, setChecked, setTimerOn,load,setLoad} =
+  const { idPost, setUrl, checked, setChecked, setTimerOn, load, setLoad } =
     useContext(StoreContext);
   const [posts, setPosts] = useState<INewsItemType[]>([]);
   const [click, setClick] = useState<number>(1);
@@ -44,7 +45,6 @@ const Lists = () => {
     if (click === 1) {
       setTimerOn(true);
     }
-    setLoad(true);
     const ids = idPost.slice(min, max);
     await ids.map(async (id: INewsItemType) => {
       await axios
@@ -64,11 +64,8 @@ const Lists = () => {
   };
 
   useEffect(() => {
- 
-    console.log(loading);
     fetchPosts(click);
     setLoading(false);
-    console.log(loading);
     setLoad(false);
   }, [idPost, click]);
 
@@ -84,7 +81,7 @@ const Lists = () => {
           />
           <div>New Posts</div>
         </div>
-        <p>Hacker News</p>
+        <p className={styles.header}>Hacker News</p>
         <Button variant="outlined" onClick={refreshPage}>
           refresh page
         </Button>
@@ -94,7 +91,7 @@ const Lists = () => {
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <TableCell className={styles.text}>Name title</TableCell>
+              <TableCell className={styles.text1}>Name title</TableCell>
               <TableCell className={styles.text} align="right">
                 Username
               </TableCell>
@@ -108,33 +105,32 @@ const Lists = () => {
           </TableHead>
 
           <TableBody>
-            {load||loading ? (
-              
-                <TableRow
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    <Skeleton width="623px">
-                      <Typography>.</Typography>
-                    </Skeleton>
-                  </TableCell>
-                  <TableCell align="right">
-                    <Skeleton width="101px">
-                      <Typography>.</Typography>
-                    </Skeleton>
-                  </TableCell>
+            {load || loading ? (
+              <TableRow
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  <Skeleton width="45vw">
+                    <Typography>.</Typography>
+                  </Skeleton>
+                </TableCell>
+                <TableCell align="right">
+                  <Skeleton width="7vw">
+                    <Typography>.</Typography>
+                  </Skeleton>
+                </TableCell>
 
-                  <TableCell align="right">
-                    <Skeleton width="82px">
-                      <Typography>.</Typography>
-                    </Skeleton>
-                  </TableCell>
-                  <TableCell align="right">
-                    <Skeleton width="141px">
-                      <Typography>.</Typography>
-                    </Skeleton>
-                  </TableCell>
-                </TableRow>
+                <TableCell align="right">
+                  <Skeleton width="6vw">
+                    <Typography>.</Typography>
+                  </Skeleton>
+                </TableCell>
+                <TableCell align="right">
+                  <Skeleton width="10vw">
+                    <Typography>.</Typography>
+                  </Skeleton>
+                </TableCell>
+              </TableRow>
             ) : error ? (
               <Error errorMessage={errorMessage} />
             ) : (

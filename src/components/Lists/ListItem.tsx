@@ -7,23 +7,23 @@ import styles from "./lists.module.scss";
 
 const ListItem = ({ item }: AllItems) => {
   return (
-    <TableRow
+    <TableRow className={styles.block}
       key={item.id}
       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
     >
-      <TableCell component="th" scope="row">
+      <TableCell className={styles.display} component="th" scope="row">
         <NavLink className={styles.link} to={`/post/${item.id}`}>
           {item.title}
         </NavLink>
       </TableCell>
-      <TableCell align="right">
+      <TableCell className={styles.none} align="right">
         <NavLink className={styles.link} to={`/users/${item.by}`}>
           {item.by}
         </NavLink>
       </TableCell>
 
-      <TableCell align="right">{item.score}</TableCell>
-      <TableCell align="right">{converterDate(item.time)}</TableCell>
+      <TableCell className={styles.none} align="right">{item.score}</TableCell>
+      <TableCell className={styles.none} align="right">{converterDate(item.time)}</TableCell>
     </TableRow>
   );
 };
