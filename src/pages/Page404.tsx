@@ -7,13 +7,14 @@ const Page404 = () => (
     <p className={styles.error}>404</p>
     <p className={styles.not_found}>страница не найдена</p>
 
-    <p className={styles.description}>страница, на которую вы пытаетесь попасть, не существует или была удалена.</p>
+    <p className={styles.description}>
+      страница, на которую вы пытаетесь попасть, не существует или была удалена.
+    </p>
     <Button variant="outlined">
-        <NavLink className={styles.link} to={"/"}>
+      <NavLink className={styles.link} to={"/"}>
         Вернуться на главную страницу
-        </NavLink>
+      </NavLink>
     </Button>
-    
   </section>
 );
 export default Page404;

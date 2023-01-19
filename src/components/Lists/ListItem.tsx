@@ -1,6 +1,7 @@
-import { TableCell, TableRow } from "@mui/material";
-import { converterDate } from "../../utils/converter";
 import { NavLink } from "react-router-dom";
+import { TableCell, TableRow } from "@mui/material";
+
+import { converterDate } from "../../utils/converter";
 import { AllItems } from "../../utils/types";
 import styles from "./lists.module.scss";
 
@@ -11,10 +12,7 @@ const ListItem = ({ item }: AllItems) => {
       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
     >
       <TableCell component="th" scope="row">
-        <NavLink
-          className={styles.link}
-          to={`/post/${item.id}`}
-        >
+        <NavLink className={styles.link} to={`/post/${item.id}`}>
           {item.title}
         </NavLink>
       </TableCell>

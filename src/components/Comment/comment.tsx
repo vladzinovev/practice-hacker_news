@@ -1,11 +1,12 @@
-import { Card, Button } from "@mui/material";
-import { converterDate } from "../../utils/converter";
-import { NavLink } from "react-router-dom";
-import { AllComment, IComment } from "../../utils/types";
-import styles from "./Comment.module.scss";
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { Card, Button } from "@mui/material";
 import axios from "axios";
+
+import { converterDate } from "../../utils/converter";
+import { AllComment, IComment } from "../../utils/types";
 import Error from "../Error/Error";
+import styles from "./Comment.module.scss";
 
 const Comment = ({ item, level = 1 }: AllComment) => {
   const [clickSize, setClickSize] = useState<number>(level);
@@ -32,13 +33,10 @@ const Comment = ({ item, level = 1 }: AllComment) => {
   }
 
   const showComment = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    
-    
     e.preventDefault();
     setShow((prevShow) => !prevShow);
-    
+
     !show ? setClickSize(clickSize + 1) : setClickSize(clickSize - 1);
-    
   };
 
   useEffect(() => {
@@ -56,7 +54,7 @@ const Comment = ({ item, level = 1 }: AllComment) => {
           </Card>
         </div>
       ) : error ? (
-        <Error errorMessage={errorMessage}/>
+        <Error errorMessage={errorMessage} />
       ) : (
         <div>
           <Card className={styles.comments}>
@@ -77,7 +75,12 @@ const Comment = ({ item, level = 1 }: AllComment) => {
           </Card>
 
           {kid.length > 0 && (
-            <Button size="medium" onClick={(e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => showComment(e)}>
+            <Button
+              size="medium"
+              onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
+                showComment(e)
+              }
+            >
               View the answer
             </Button>
           )}
@@ -90,7 +93,7 @@ const Comment = ({ item, level = 1 }: AllComment) => {
                 </Card>
               </div>
             ) : error ? (
-              <Error errorMessage={errorMessage}/>
+              <Error errorMessage={errorMessage} />
             ) : (
               kid?.map((k) => (
                 <div

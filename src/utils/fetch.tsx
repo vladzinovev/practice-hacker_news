@@ -9,7 +9,7 @@ export async function fetchPost(
     | React.Dispatch<React.SetStateAction<IUser | undefined>>
     | React.Dispatch<React.SetStateAction<INewsItemType | undefined>>,
   setError: Dispatch<SetStateAction<boolean>>,
-  setErrorMessage:Dispatch<SetStateAction<string>>
+  setErrorMessage: Dispatch<SetStateAction<string>>
 ) {
   await axios
     .get(url)

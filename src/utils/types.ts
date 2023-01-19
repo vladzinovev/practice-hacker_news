@@ -26,7 +26,7 @@ export interface IComment {
 
 export interface AllComment {
   item: IComment;
-  level:number;
+  level: number;
 }
 
 export interface IUser {
@@ -35,4 +35,8 @@ export interface IUser {
   id: number;
   karma: number;
   submitted: [];
+}
+
+export interface IErrorComment {
+  errorMessage: string;
 }

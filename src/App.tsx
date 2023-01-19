@@ -1,9 +1,10 @@
 import { Route, Routes } from "react-router-dom";
-import "./App.scss";
+
 import Lists from "./components/Lists/Lists";
 import Post from "./components/Post/Post";
 import User from "./components/User/User";
 import Page404 from "./pages/Page404";
+import "./App.scss";
 
 function App() {
   return (

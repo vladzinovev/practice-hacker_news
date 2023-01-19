@@ -1,4 +1,3 @@
-
 import {
   createContext,
   Dispatch,
@@ -8,6 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
+
 import { fetchPost } from "../utils/fetch";
 import { INewsItemType } from "../utils/types";
 
