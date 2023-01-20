@@ -66,14 +66,17 @@ const StoreComponent = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     fetchPost(url, setIdPost, setError, setErrorMessage);
+  }, [url]);
+
+  useEffect(() => {
     if (timerOn) {
       timer.current = setInterval(() => {
         fetchPost(url, setIdPost, setError, setErrorMessage);
-      }, 100000);
+      }, 60000);
     } else {
       clearInterval(timer.current);
     }
-  }, [url||timerOn]);
+  }, [timerOn]);
 
   if (!idPost) return null;
 

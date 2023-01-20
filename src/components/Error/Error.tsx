@@ -1,12 +1,10 @@
-import styles from "./Error.module.scss";
-import error2 from "../../image/error2.gif";
 import { Card } from "@mui/material";
 
-export interface IErrorComment {
-  errorMessage: string;
-}
+import { IErrorComment } from "../../utils/types";
+import error2 from "../../image/error2.gif";
+import styles from "./Error.module.scss";
 
-const Error = ({errorMessage}: IErrorComment) => {
+const Error = ({ errorMessage }: IErrorComment) => {
   return (
     <Card className={styles.error}>
       <p className={styles.text}>{errorMessage}</p>

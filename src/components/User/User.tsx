@@ -1,19 +1,16 @@
-import { Avatar, Button, Card, Stack, CardContent } from "@mui/material";
-import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { Avatar, Button, Card, Stack, CardContent } from "@mui/material";
+
 import logo from "../../image/logo.png";
 import { converterDate } from "../../utils/converter";
 import { IUser } from "../../utils/types";
+import { fetchPost } from "../../utils/fetch";
+import Error from "../Error/Error";
 import styles from "./User.module.scss";
 
-import { fetchPost } from "../../utils/fetch";
-import { StoreContext } from "../../store/store";
-import Error from "../Error/Error";
-
 const User = () => {
-
-    const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   let params = useParams();
   let navigate = useNavigate();
   const [user, setUser] = useState<IUser>();
