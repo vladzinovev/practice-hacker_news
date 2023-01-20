@@ -45,26 +45,35 @@ export const StoreContext = createContext<IStoreContext>({
 
 const StoreComponent = ({ children }: { children: ReactNode }) => {
   const [idPost, setIdPost] = useState<INewsItemType[]>([]);
-  const [url, setUrl] = useState<string>(`${process.env.REACT_APP_NEWS_URL}`);
+
   const [load, setLoad] = useState(false);
-  const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState(() => {
+    const storage = localStorage.getItem("check");
+    if (storage !== null) {
+      return JSON.parse(storage);
+    }
+    return true;
+  });
+  const [url, setUrl] = useState<string>(
+    checked
+      ? `${process.env.REACT_APP_NEWS_URL}`
+      : `${process.env.REACT_APP_BEST_URL}`
+  );
   const [timerOn, setTimerOn] = useState(true);
   const timer = useRef<NodeJS.Timeout>();
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    setLoad(true);
     fetchPost(url, setIdPost, setError, setErrorMessage);
     if (timerOn) {
       timer.current = setInterval(() => {
         fetchPost(url, setIdPost, setError, setErrorMessage);
-      }, 60000);
+      }, 100000);
     } else {
       clearInterval(timer.current);
     }
-    
-  }, [url, timerOn]);
+  }, [url||timerOn]);
 
   if (!idPost) return null;
 

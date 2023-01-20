@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 import {
   Avatar,
   Button,
@@ -9,22 +12,17 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import axios from "axios";
-import { useContext, useEffect, useState } from "react";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
-import { StoreContext } from "../../store/store";
+
 import { IComment, INewsItemType } from "../../utils/types";
-import styles from "./Post.module.scss";
-import logo from "../../image/logo.png";
 import { converterDate } from "../../utils/converter";
 import Comment from "../Comment/comment";
-
 import { fetchPost } from "../../utils/fetch";
 import Error from "../Error/Error";
+import logo from "../../image/logo.png";
+import styles from "./Post.module.scss";
 
 const Post = () => {
   const [loading, setLoading] = useState(false);
-  const [load, setLoad] = useState(false);
   let params = useParams();
   let navigate = useNavigate();
   const [postItem, setPostItem] = useState<INewsItemType>();
@@ -58,15 +56,9 @@ const Post = () => {
 
   const showComment = () => {
     setShow(true);
-    setLoad(true);
-    /* localStorage.setItem("comment", JSON.stringify(true)); */
   };
 
   useEffect(() => {
-    /* const items = JSON.parse(localStorage.getItem("comment")|| '');
-    if (items) {
-        setShow(items);
-    }  */
     setLoading(true);
     fetchPost(
       `${process.env.REACT_APP_ITEM_URL}${params.id}.json`,
@@ -82,11 +74,9 @@ const Post = () => {
     if (items) {
         setShow(items);
     }  */
-    console.log(show);
     setLoading(true);
     fetchComments();
     setLoading(false);
-    setLoad(false);
   }, [show]);
 
   return (
@@ -112,7 +102,7 @@ const Post = () => {
             <div className={styles.flex}>
               <Stack direction="row" spacing={2}>
                 <Skeleton variant="circular">
-                  <Avatar/>
+                  <Avatar />
                 </Skeleton>
               </Stack>
 

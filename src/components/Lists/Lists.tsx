@@ -29,8 +29,11 @@ const Lists = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
+  
+
   const handleChange = () => {
     setChecked(!checked);
+    window.localStorage.setItem('check', JSON.stringify(!checked));
     setLoading(true);
     checked
       ? setUrl(`${process.env.REACT_APP_BEST_URL}`)

@@ -7,7 +7,8 @@ import styles from "./lists.module.scss";
 
 const ListItem = ({ item }: AllItems) => {
   return (
-    <TableRow className={styles.block}
+    <TableRow
+      className={styles.block}
       key={item.id}
       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
     >
@@ -22,8 +23,12 @@ const ListItem = ({ item }: AllItems) => {
         </NavLink>
       </TableCell>
 
-      <TableCell className={styles.none} align="right">{item.score}</TableCell>
-      <TableCell className={styles.none} align="right">{converterDate(item.time)}</TableCell>
+      <TableCell className={styles.none} align="right">
+        {item.score}
+      </TableCell>
+      <TableCell className={styles.none} align="right">
+        {converterDate(item.time)}
+      </TableCell>
     </TableRow>
   );
 };

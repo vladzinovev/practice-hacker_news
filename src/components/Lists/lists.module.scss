@@ -1,6 +1,5 @@
 @import "../../variables";
 .lists {
-  
   .navigation {
     display: flex;
     justify-content: space-between;
@@ -33,7 +32,8 @@
   .news {
     margin-top: 20px;
     border: 1px solid $main-border;
-    .text, .text1 {
+    .text,
+    .text1 {
       font-weight: 600;
       font-size: 17px;
     }
@@ -46,18 +46,21 @@
   @media (max-width: 700px) {
     .news {
       width: 100%;
-      .text, .none {
-        display:none;
+      .text,
+      .none {
+        display: none;
       }
     }
     .navigation {
       .header {
         margin-right: 10px;
-        
       }
     }
   }
-  @media (max-width: 500px) {
+  @media (max-width: 400px) {
+    .header{
+      display:none;
+    }
     
   }
 }
