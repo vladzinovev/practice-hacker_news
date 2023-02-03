@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/practice-hacker_news/static/css/main.e13c998d.css",
+    "main.js": "/practice-hacker_news/static/js/main.12d15f77.js",
+    "static/media/logo.png": "/practice-hacker_news/static/media/logo.b054ef45c943954c0050.png",
+    "index.html": "/practice-hacker_news/index.html",
+    "main.e13c998d.css.map": "/practice-hacker_news/static/css/main.e13c998d.css.map",
+    "main.12d15f77.js.map": "/practice-hacker_news/static/js/main.12d15f77.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e13c998d.css",
+    "static/js/main.12d15f77.js"
+  ]
+}
