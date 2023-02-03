@@ -54,4 +54,21 @@
       margin-top: 12px;
     }
   }
+  @media (max-width: 460px) {
+    .navigation{
+      position: relative;
+      .header{
+        margin: auto;
+        position: absolute;
+        top: 50px;
+        left: 0;
+        bottom: 0;
+        right: 0;
+      }
+    }
+    .card{
+      margin-top: 50px;
+    }
+  }
+  
 }

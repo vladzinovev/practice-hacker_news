@@ -153,7 +153,7 @@ const Lists = () => {
         >
           previous Page
         </Button>
-        <div>Design by Vlad</div>
+        <div className={styles.design}>Design by Vlad</div>
         <Button
           className={styles.footerbutton}
           disabled={posts.length < 20 ? true : false}

@@ -85,7 +85,7 @@ const Post = () => {
         <Button variant="outlined" className={styles.button} onClick={goBack}>
           go back
         </Button>
-        <p>Hacker News</p>
+        <p className={styles.header}>Hacker News</p>
         <Button
           variant="outlined"
           onClick={() => {

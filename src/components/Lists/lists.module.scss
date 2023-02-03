@@ -4,7 +4,6 @@
     display: flex;
     justify-content: space-between;
     .header {
-      margin-right: 164px;
       margin-top: 12px;
       font-family: "Roboto", "Helvetica", "Arial", sans-serif;
       font-weight: 500;
@@ -42,6 +41,12 @@
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
+    .design {
+      margin-top: 10px;
+    }
+  }
+  .link {
+    color: $main-link;
   }
   @media (max-width: 700px) {
     .news {
@@ -52,17 +57,38 @@
       }
     }
     .navigation {
+      position: relative;
       .header {
-        margin-right: 10px;
+        
+        position: absolute;
+        top: 40px;
+        left: 0;
+        bottom: 0;
+        right: 0;
+      }
+    }
+    .news{
+      margin-top: 50px;
+    }
+  }
+  @media (max-width: 426px) {
+    .navigation {
+      position: relative;
+      .header {
+        
+        position: absolute;
+        top: 66px;
+        left: 0;
+        bottom: 0;
+        right: 0;
       }
     }
   }
   @media (max-width: 400px) {
-    .header {
-      display: none;
+    .footer {
+      .design {
+        display: none;
+      }
     }
   }
-}
-.link {
-  color: $main-link;
 }
