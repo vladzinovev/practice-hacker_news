@@ -1,6 +1,6 @@
 # Hacker news
 
-Project: [hacker-news](https://vladzinovev.github.io/practice-hacker_news/).
+**Demo project:** [hacker-news](https://vladzinovev.github.io/practice-hacker_news/).
 
 **[Основная страница]** - первое, что видит пользователь.
 
@@ -37,6 +37,8 @@ Project: [hacker-news](https://vladzinovev.github.io/practice-hacker_news/).
 С какой страницы попали на страницу автора, на такую потом и вернемся по клику на кнопку (go back), а не на основную страницу.
 
 [Запросы через axios](https://github.com/HackerNews/API)
+
+[Тестовое задание](https://github.com/avito-tech/internship_frontend_2022)
 
 ## Стек технологий
 
